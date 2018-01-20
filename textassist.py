@@ -94,32 +94,21 @@ class SampleTextAssistant(object):
 
 @click.command()
 @click.option('--api-endpoint', default=ASSISTANT_API_ENDPOINT,
-              metavar='<api endpoint>', show_default=True,
-              help='Address of Google Assistant API service.')
+              metavar='<api endpoint>', show_default=True)
 @click.option('--credentials',
               metavar='<credentials>', show_default=True,
               default=os.path.join(click.get_app_dir('google-oauthlib-tool'),
-                                   'credentials.json'),
-              help='Path to read OAuth2 credentials.')
+                                   'credentials.json'))
 @click.option('--device-model-id',
-              metavar='<device model id>',
-              help=(('Unique device model identifier, '
-                     'if not specifed, it is read from --device-config')))
+              metavar='<device model id>')
 @click.option('--device-id',
-              metavar='<device id>',
-              help=(('Unique registered device instance identifier, '
-                     'if not specified, it is read from --device-config, '
-                     'if no device_config found: a new device is registered '
-                     'using a unique id and a new device config is saved')))
+              metavar='<device id>')
 @click.option('--lang', show_default=True,
               metavar='<language code>',
-              default='en-US',
-              help='Language code of the Assistant')
-@click.option('--verbose', '-v', is_flag=True, default=False,
-              help='Verbose logging.')
+              default='en-US')
+@click.option('--verbose', '-v', is_flag=True, default=False)
 @click.option('--grpc-deadline', default=DEFAULT_GRPC_DEADLINE,
-              metavar='<grpc deadline>', show_default=True,
-              help='gRPC deadline in seconds')
+              metavar='<grpc deadline>', show_default=True)
 def main(api_endpoint, credentials,
          device_model_id, device_id, lang, verbose,
          grpc_deadline, *args, **kwargs):
