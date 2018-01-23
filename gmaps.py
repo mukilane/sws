@@ -4,40 +4,9 @@ from datetime import datetime
 import dialogflow
 import googlemaps
 
+import gps
 
-def detect_intent_texts(session_id, texts):
-    """Returns the result of detect intent with texts as inputs.
-
-    Using the same `session_id` between requests allows continuation
-    of the conversaion."""
-
-    project_id = "project-harmony" 
-    language_code = "en"
-    session_client = dialogflow.SessionsClient()
-
-    session = session_client.session_path(project_id, session_id)
-    print('Session path: {}\n'.format(session))
-
-    for text in texts:
-        text_input = dialogflow.types.TextInput(
-            text=text, language_code=language_code)
-
-        query_input = dialogflow.types.QueryInput(text=text_input)
-
-        response = session_client.detect_intent(
-            session=session, query_input=query_input)
-
-        print('=' * 20)
-        print('Query text: {}'.format(response.query_result.query_text))
-        print('Detected intent: {} (confidence: {})\n'.format(
-            response.query_result.intent.display_name,
-            response.query_result.intent_detection_confidence))
-        print('Fulfillment text: {}\n'.format(
-            response.query_result.fulfillment_text))
-
-
-# Hard code the Home location
-currentPosition = { 'lat': 0, 'lng': 0 }
+GOOGLE_MAPS_API_KEY = 'AIzaSyAZbBobi42KFDDcAX8OMew5IKzWnyjCQ88'
 
 def strip_tags(html):
     return re.sub('<[^<]+?>', '', html)
@@ -79,6 +48,57 @@ def getCurrentLocation(gps=False):
         currentPosition['lat'] = data["lat"]
         currentPosition['lng'] = data["lng"]
 
+
+class Maps(object):
+    """This class will initiate a map session and provides directions"""
+
+    def __init__(self):
+        self.maps = None
+        self.currentLocation = { 'lat': 0.0, 'lng': 0.0 }
+        self.destination = None
+        self.transit_mode = None
+        self.directions = None
+        self.steps = None
+        try:
+            self.maps = googlemaps.Client(key=GOOGLE_MAPS_API_KEY)
+        except:
+            print("Error occured during Maps Initialization")
+    
+    def getDirections(self, source, destination, mode):
+        """Obtains the directions for a route"""
+
+        departure_time = datetime.now()
+        
+        try:
+            self.directions = self.maps.directions(
+                source,
+                destination,
+                mode=mode,
+                departure_time=departure_time
+            )
+            self.steps = self.directions[0]['legs'][0]['steps']
+            print(self.directions)
+        except:
+            print("Error occured while getting diretions")
+    
+    def isDestinationReached():
+        """Check if the destination is reached"""
+
+    def getCurrentLocation():
+        """Get the current location"""
+        if gps.available:
+            self.currentLocation = gps.getLocation()
+        else:
+            data = self.maps.geolocate()['location']
+            self.currentLocation['lat'] = data['lat']
+            self.currentLocation['lng'] = data['lng']
+    
+    def startNavigation(self, source, destination):
+        for step in self.directions[0]['legs']:
+            print(step)
+            
+        
+
 if __name__ == "__main__":
-    getCurrentLocation()
-    print(currentPosition)
+    maps = Maps()
+    maps.getDirections('ashok pillar', 'tambaram', 'walking')
