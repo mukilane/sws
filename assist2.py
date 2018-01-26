@@ -29,13 +29,7 @@ except (SystemError, ImportError):
     import audio_helpers
     import device_helpers
 
-from configparser import SafeConfigParser
-config = SafeConfigParser()
-config.read('config.ini')
 
-GOOGLE_PROJECT_ID = config.read('GOOGLE', 'GOOGLE_CLOUD_PROJECT_ID')
-DEVICE_MODEL_ID = config.read('GOOGLE', 'DEVICE_MODEL_ID')
-CREDENTIALS = os.path.join(click.get_app_dir('google-oauthlib-tool'), 'credentials.json')
 
 ASSISTANT_API_ENDPOINT = 'embeddedassistant.googleapis.com'
 END_OF_UTTERANCE = embedded_assistant_pb2.AssistResponse.END_OF_UTTERANCE
@@ -159,16 +153,15 @@ class SampleAssistant(object):
               help='Address of Google Assistant API service.')
 @click.option('--credentials',
               metavar='<credentials>', show_default=True,
-              default=CREDENTIALS,
+              default=os.path.join(click.get_app_dir('google-oauthlib-tool'),
+                                   'credentials.json'),
               help='Path to read OAuth2 credentials.')
 @click.option('--project-id',
               metavar='<project id>',
-              default=GOOGLE_PROJECT_ID,
               help=('Google Developer Project ID used for registration '
                     'if --device-id is not specified'))
 @click.option('--device-model-id',
               metavar='<device model id>',
-              default=DEVICE_MODEL_ID,
               help=(('Unique device model identifier, '
                      'if not specifed, it is read from --device-config')))
 @click.option('--device-id',

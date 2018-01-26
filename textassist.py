@@ -67,7 +67,7 @@ class SampleTextAssistant(object):
                 audio_out_config=embedded_assistant_pb2.AudioOutConfig(
                     encoding='LINEAR16',
                     sample_rate_hertz=16000,
-                    volume_percentage=0,
+                    volume_percentage=80,
                 ),
                 dialog_state_in=dialog_state_in,
                 device_config=embedded_assistant_pb2.DeviceConfig(

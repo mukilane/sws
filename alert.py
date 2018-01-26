@@ -1,11 +1,14 @@
 import requests
 from twilio.rest import Client
+from configparser import SafeConfigParser
 
+config = SafeConfigParser()
+config.read('config.ini')
 MAKER_BASE_URL = "https://maker.ifttt.com/trigger/"
 EVENT = "send_sms"
-AUTH_URL = "/with/key/cfSecjPrUxCqVzEB9mqi4x"
-TWILIO_ACCOUNT_SID = "AC4e27168210d1a16d51881f76a0e07fd8"
-TWILIO_AUTH_TOKEN = "48af015ecfd97addaba5caab7e64728a"
+AUTH_URL = "/with/key/" + config.get('keys', 'IFTTT_MAKER_KEY')
+TWILIO_ACCOUNT_SID = config.get('keys', 'TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = config.get('keys', 'TWILIO_AUTH_TOKEN')
 
 
 class Alerter(object):

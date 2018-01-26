@@ -1,10 +1,15 @@
 import re
+from configparser import SafeConfigParser
 from datetime import datetime
+
 import dialogflow
 import googlemaps
+
 import gps
 
-GOOGLE_MAPS_API_KEY = 'AIzaSyAZbBobi42KFDDcAX8OMew5IKzWnyjCQ88'
+config = SafeConfigParser()
+config.read('config.ini')
+GOOGLE_MAPS_API_KEY = config.get('keys', 'GOOGLE_MAPS_API_KEY')
 
 
 class Maps(object):

@@ -3,16 +3,23 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from configparser import SafeConfigParser
+
+config = SafeConfigParser()
+config.read('config.ini')
+
+FIREABSE_SERVICE_ACCOUNT_CREDENTIALS = config.get('firebase', 'FIREBASE_SERVICE_ACCOUNT')
+FIREBASE_DATABASE_URL = config.get('firebase', 'FIREBASE_DATABASE_URL')
 
 class GPS(object):
     
     def __init__(self):
-        self.cred = credentials.Certificate('/home/mukil/Downloads/project-harmony-firebase-adminsdk-o8sr8-9fd814dc8d.json')
+        self.cred = credentials.Certificate(FIREABSE_SERVICE_ACCOUNT_CREDENTIALS)
         self.client = None
         self.ref = None
         try:
             firebase_admin.initialize_app(self.cred, {
-                'databaseURL' : 'https://project-harmony.firebaseio.com'
+                'databaseURL' : FIREBASE_DATABASE_URL
             })
             self.client = firestore.client()
             self.ref = self.client.document('users/cJZRuTCZR4yL4za3OfMM')
@@ -31,3 +38,4 @@ class GPS(object):
     
 if __name__ == "__main__":
     gps = GPS()
+    gps.getPosition()
