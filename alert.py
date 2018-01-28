@@ -56,10 +56,10 @@ class Alerter(object):
         """Sends a POST request to IFTTT Maker service
 
         Arguments:
-            payload {[dict]} -- [dict containing three values]
+            payload {dict} -- dict containing three values
 
         Returns:
-            [Response] -- [response text from IFTTT]
+            Response -- response text from IFTTT
         """
         self.payload = payload
         self.url = MAKER_BASE_URL + EVENT + AUTH_URL
@@ -72,8 +72,6 @@ class Alerter(object):
             to="+919962473577",
             body="hello world"
         )
-
-    def 
 
 
 if __name__ == "__main__":

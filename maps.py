@@ -34,7 +34,6 @@ from datetime import datetime
 
 import dialogflow
 import googlemaps
-
 import gps
 
 config = SafeConfigParser()
@@ -84,20 +83,67 @@ class Maps(object):
     def isDestinationReached():
         """Check if the destination is reached"""
 
-    def getCurrentLocation():
+    def getCurrentLocation(self):
+        """Rerieves the current location
 
-        if gps.available:
-            self.currentLocation = gps.getLocation()
+        Uses GPS if available, eles uses Geolocation.
+        """
+        if self.gps.available:
+            self.currentLocation = self.gps.getPosition()
         else:
             data = self.maps.geolocate()['location']
             self.currentLocation['lat'] = data['lat']
             self.currentLocation['lng'] = data['lng']
+        print(self.currentLocation)
+
+    def getNearby(self):
+        """Gets the nearby places 
+
+        Returns:
+            dict -- An array of dict containing places
+        """
+        location = self.getCurrentLocation()
+        result = self.maps.places_nearby(
+            location=location,
+            radius=100
+        )['results']
+        return result
+
+    def getBearing(self):
+        """Gets the current place of the user in a human readable form
+
+        Returns:
+            Place -- contains long_name, short_name 
+        """
+        location = self.getCurrentLocation()
+        result = self.maps.reverse_geocode(
+            location
+        )[0]['address_components'][0]
+        return result
 
     def startNavigation(self, source, destination):
         for step in self.directions[0]['legs']:
             print(step)
 
+    def getBusRoute(self):
+        """Retrieves the bus routes from source to destination"""
+        result = self.maps.directions(
+            origin="Ashok pillar, Chennai",
+            destination="K.K.Nagar",
+            mode="transit",
+            transit_mode="bus"
+        )
+        steps = []
+        buses = []
+        for r in result[0]['legs'][0]['steps']:
+            steps.append(r['html_instructions'])
+            if r['travel_mode'] == "TRANSIT":
+                bus = r['transit_details']['line']['short_name']
+                buses.append(bus)
+        print(steps, buses)
+
 
 if __name__ == "__main__":
     maps = Maps()
-    maps.getDirections('ashok pillar', 'tambaram', 'walking')
+    # maps.getDirections('ashok pillar', 'tambaram', 'walking')
+    maps.getCurrentLocation()

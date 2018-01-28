@@ -12,42 +12,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+"""GPS Module
+
+This module implements methods to retrieve GPS coordinates from the sensor
+and/or from Firestore.
+"""
+
+from firebase_client import firebase
 from configparser import SafeConfigParser
 
 config = SafeConfigParser()
 config.read('config.ini')
 
-FIREABSE_SERVICE_ACCOUNT_CREDENTIALS = config.get('firebase', 'FIREBASE_SERVICE_ACCOUNT')
+FIREABSE_SERVICE_ACCOUNT_CREDENTIALS = config.get(
+    'firebase', 'FIREBASE_SERVICE_ACCOUNT')
 FIREBASE_DATABASE_URL = config.get('firebase', 'FIREBASE_DATABASE_URL')
 
+
 class GPS(object):
-    
+
     def __init__(self):
-        self.cred = credentials.Certificate(FIREABSE_SERVICE_ACCOUNT_CREDENTIALS)
-        self.client = None
-        self.ref = None
-        try:
-            firebase_admin.initialize_app(self.cred, {
-                'databaseURL' : FIREBASE_DATABASE_URL
-            })
-            self.client = firestore.client()
-            self.ref = self.client.document('users/cJZRuTCZR4yL4za3OfMM')
-            self.data = self.ref.get()
-            self.position = self.data.to_dict()['lastLocation']
-        except:
-            print("Error during firebase app initialization")
-    
-    def sync(self):
-        self.data = self.ref.get()
-        self.position = self.data.to_dict()['lastLocation']
+        self.available = False
 
     def getPosition(self):
-        self.sync()
-        return self.position
-    
+        """Retrieves the location data from the GPS module
+
+        Currently, uses Firebase to mock GPS data
+
+        Returns:
+            dict -- Contains lat/lng
+        """
+        data = firebase.getPosition()['lastLocation']
+        location = {
+            'lat': data.latitude,
+            'lng': data.longitude
+        }
+        return location
+
+
 if __name__ == "__main__":
     gps = GPS()
-    gps.getPosition()
+    print(gps.getPosition())
