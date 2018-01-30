@@ -1,7 +1,14 @@
+from configparser import SafeConfigParser
+
 import argparse
 import uuid
 import dialogflow
 import audio
+
+config = SafeConfigParser()
+config.read('config.ini')
+
+PROJECT_ID = config.get('GOOGLE', 'GOOGLE_CLOUD_PROJECT_ID')
 
 def detect_intent_texts(project_id, session_id, texts, language_code):
 
@@ -89,6 +96,15 @@ def detect_intent_audio(project_id, session_id, audio_file_path,
 #         args.project_id, args.session_id, args.texts, args.language_code)
 
 
+def start():
+    project_id = PROJECT_ID
+    session_id = str(uuid.uuid4())
+    language_code = "en-US"
+    audio_file_path = "speech.wav"
+    audio.record()
+    detect_intent_audio(
+        project_id, session_id, audio_file_path, language_code
+    )
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -115,7 +131,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     audio.record()
-
-    detect_intent_audio(
-        args.project_id, args.session_id, args.audio_file_path,
+    
+    detect_intent_audio(args.project_id, args.session_id, args.audio_file_path,
         args.language_code)

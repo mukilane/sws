@@ -24,6 +24,7 @@ from alert import Alerter
 from gps import GPS
 #from hardware import Hardware
 from maps import Maps
+import dialogflowAssistant
 
 config = SafeConfigParser()
 config.read('config.ini')
@@ -87,9 +88,14 @@ class SANAS(object):
 
     def listen(self, channel):
         """Invokes the dialogflow agent"""
-        
+        intent = dialogflowAssistant.start()
+        cases = {
+            'NAVIGATE': self.navigate
+            'ALERT': self.alert
+            'ASSIST': self.assist
+        }
+        cases[intent]()
 
-        
 
 if __name__ == "__main__":
     sanas = SANAS()
