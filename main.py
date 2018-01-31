@@ -89,12 +89,12 @@ class SANAS(object):
     def listen(self, channel):
         """Invokes the dialogflow agent"""
         intent = dialogflowAssistant.start()
-        cases = {
-            'NAVIGATE': self.navigate
-            'ALERT': self.alert
-            'ASSIST': self.assist
-        }
-        cases[intent]()
+        if intent == "Alert":
+            self.alert()
+        elif intent == "Navigate":
+            self.navigate()
+        elif intent == "Assist":
+            self.assist()
 
 
 if __name__ == "__main__":
