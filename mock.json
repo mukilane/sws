@@ -1,0 +1,31 @@
+{
+    "ble": {
+        "busroutes": [
+            {
+                "id": "1234567890",
+                "route_name": "5E",
+                "stages": [
+                    "BESANT NAGAR",
+                    "ADYAR DEPOT",
+                    "ADYAR B.S.",
+                    "ENG.COLLEGE",
+                    "CONCORDE",
+                    "SAIDAPET",
+                    "SRINIVASA THEATER",
+                    "JAFFARKHAN PET",
+                    "K.K.NAGAR B.S.",
+                    "MUTHUMARIAMMAN KOIL",
+                    "Jn.OF P.T.R Rd/KAMARAJ Rd",
+                    "VADAPALANI B.S"
+                ]
+            },
+            {
+                "id": "1234567891",
+                "route_name": "",
+                "stages": [
+                    
+                ]
+            }
+        ]
+    }
+}

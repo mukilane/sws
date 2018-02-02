@@ -16,8 +16,11 @@
 This module implements methods to start, stop, manage the bluetooth service
 and facilitates advertising and scanning of Beacons.
 """
-from beacontools import BeaconScanner, EddystoneTLMFrame, EddystoneFilter
+import json
 from time import sleep
+
+from beacontools import BeaconScanner, EddystoneFilter, EddystoneTLMFrame
+
 
 class BLE(object):
     
@@ -26,6 +29,7 @@ class BLE(object):
             callback,
             packet_filter=EddystoneTLMFrame
         )
+        self.mockdata = json.load(open('mock.json'))
     
     def start(self):
         self.service.start_advertising("11111111-2222-3333-4444-555555555555",

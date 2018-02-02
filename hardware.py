@@ -19,11 +19,13 @@ This modules implements methods to interface with the hardware (Raspberry Pi).
 
 import Rpi.GPIO as GPIO
 import time
+import serial
 
 GPIO_ALERT_PIN = 24
 GPIO_ASSISTANT_PIN = 22
 GPIO_NAVIGATE_PIN = 20
 GPIO_CLASSIFIER_PIN = 19
+GPIO_RANGER_PIN = 28
 
 
 class Hardware(object):
@@ -58,3 +60,19 @@ class Hardware(object):
     def cleanup(self):
         """Cleans up all the ports used"""
         GPIO.cleanup()
+    
+    def ranger(self):
+        """Reads ultrasonic sensor data
+        
+        Connects to Arduino through I2C and receives data from the 
+        ultrasonic sensor.
+        This function will run in a separate thread.
+        """
+        try:
+            port = serial.Serial('dev/ttyUSB0', 9600)
+        except:
+            print("Connection error")
+            exit()
+        while True:
+            val = port.readline()
+            # Notify based on 

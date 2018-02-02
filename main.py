@@ -14,17 +14,18 @@
 """Main module
 
 This module will import all the submodules and invoke them based on user 
-selection.
+selection. 
 """
 
+import threading
 from configparser import SafeConfigParser
 
 import assist
+import dialogflowAssistant
 from alert import Alerter
 from gps import GPS
 #from hardware import Hardware
 from maps import Maps
-import dialogflowAssistant
 
 config = SafeConfigParser()
 config.read('config.ini')
