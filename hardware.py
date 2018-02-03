@@ -15,23 +15,37 @@
 """Hardware Module
 
 This modules implements methods to interface with the hardware (Raspberry Pi).
+
+Components to be interfaced are
+1. Buttons 
+    a. Alert button - BCM_22 / Phy_15
+    b. Navigate button - BCM_23 / Phy_16
+    c. Assistant button - BCM_24 / Phy_18
+
+    These buttons are push buttons which are pulled down.
+    Events are trigged on falling edge (3v3 to 0).
+2. Arduino
+    Arduino will be interfaced either through USB or I2C. Data will be read
+    from it continuously in a separate thread.
 """
 
 import Rpi.GPIO as GPIO
 import time
 import serial
+import threading
 
-GPIO_ALERT_PIN = 24
-GPIO_ASSISTANT_PIN = 22
-GPIO_NAVIGATE_PIN = 20
+GPIO_ALERT_PIN = 22
+GPIO_ASSISTANT_PIN = 24
+GPIO_NAVIGATE_PIN = 23
 GPIO_CLASSIFIER_PIN = 19
-GPIO_RANGER_PIN = 28
 
 
 class Hardware(object):
+    """Wrapper for all the hardware interfaces and events"""
 
     def __init__(self):
         self.available = False
+        self.ranger_thread = threading.Thread(target=self.ranger, daemon=True)
 
     def setup(self, alert, navigate, assist):
         """Sets up all the GPIO pins and callbacks

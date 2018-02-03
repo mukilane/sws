@@ -29,15 +29,14 @@ Todo:
     2. Support for OpenStreetMap
 """
 import re
-from configparser import SafeConfigParser
 from datetime import datetime
 
 import dialogflow
 import googlemaps
-import gps
 
-config = SafeConfigParser()
-config.read('config.ini')
+import gps
+from config_reader import config
+
 GOOGLE_MAPS_API_KEY = config.get('keys', 'GOOGLE_MAPS_API_KEY')
 
 

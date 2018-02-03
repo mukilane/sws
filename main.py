@@ -14,21 +14,30 @@
 """Main module
 
 This module will import all the submodules and invoke them based on user 
-selection. 
+selection.
+
+The various operations are divided into streams/actions. Two or more streams 
+can run in parallel. 
+eg: Invoking assistant during navigation; Alerting during navigation
+The various streams/actions are:
+1. Navigate stream
+    This invokes the maps module and starts a navigation or exploration
+    session.
+2. Assistant stream
+    This invokes the Google Assistant module.
+3. Alert stream
+    This invokes the Alert module to send sms and log the location data.
 """
 
 import threading
-from configparser import SafeConfigParser
 
 import assist
 import dialogflowAssistant
 from alert import Alerter
+from config_reader import config
 from gps import GPS
 #from hardware import Hardware
 from maps import Maps
-
-config = SafeConfigParser()
-config.read('config.ini')
 
 
 class SANAS(object):
@@ -75,7 +84,7 @@ class SANAS(object):
             print("Action already running")
 
     def alert(self, channel):
-        """Calls the alert steam
+        """Calls the alert stream
 
         Arguments:
             channel {[type]} -- [description]
@@ -101,3 +110,4 @@ class SANAS(object):
 if __name__ == "__main__":
     sanas = SANAS()
     sanas.start()
+    sanas.listen("d")

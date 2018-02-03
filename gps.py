@@ -18,20 +18,15 @@ This module implements methods to retrieve GPS coordinates from the sensor
 and/or from Firestore.
 """
 
+from config_reader import config
 from firebase_client import firebase
-from configparser import SafeConfigParser
-
-config = SafeConfigParser()
-config.read('config.ini')
-
-FIREABSE_SERVICE_ACCOUNT_CREDENTIALS = config.get(
-    'firebase', 'FIREBASE_SERVICE_ACCOUNT')
-FIREBASE_DATABASE_URL = config.get('firebase', 'FIREBASE_DATABASE_URL')
 
 
 class GPS(object):
+    """Wrapper for GPS sensor."""
 
     def __init__(self):
+        # Whether GPS sensor is available
         self.available = False
 
     def getPosition(self):
@@ -42,12 +37,9 @@ class GPS(object):
         Returns:
             dict -- Contains lat/lng
         """
-        data = firebase.getPosition()['lastLocation']
-        location = {
-            'lat': data.latitude,
-            'lng': data.longitude
-        }
-        return location
+        if not self.available:
+            location = firebase.getPosition()
+            return location
 
 
 if __name__ == "__main__":
