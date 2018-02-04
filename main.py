@@ -46,7 +46,7 @@ class SANAS(object):
         self.assistant = assist
         self.gps = GPS()
         self.maps = Maps()
-        #self.hardware = Hardware()
+        self.hardware = None #Hardware()
         self.alerter = Alerter()
 
         self.isAssistantRunning = False
@@ -100,11 +100,11 @@ class SANAS(object):
         """Invokes the dialogflow agent"""
         intent = dialogflowAssistant.start()
         if intent == "Alert":
-            self.alert()
+            self.alert(None)
         elif intent == "Navigate":
-            self.navigate()
+            self.navigate(None)
         elif intent == "Assist":
-            self.assist()
+            self.assist(None)
 
 
 if __name__ == "__main__":
