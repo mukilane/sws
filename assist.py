@@ -29,9 +29,7 @@ except (SystemError, ImportError):
     import audio_helpers
     import device_helpers
 
-from configparser import SafeConfigParser
-config = SafeConfigParser()
-config.read('config.ini')
+from config_reader import config
 
 GOOGLE_PROJECT_ID = config.read('GOOGLE', 'GOOGLE_CLOUD_PROJECT_ID')
 DEVICE_MODEL_ID = config.read('GOOGLE', 'DEVICE_MODEL_ID')
@@ -43,7 +41,7 @@ DIALOG_FOLLOW_ON = embedded_assistant_pb2.DialogStateOut.DIALOG_FOLLOW_ON
 CLOSE_MICROPHONE = embedded_assistant_pb2.DialogStateOut.CLOSE_MICROPHONE
 DEFAULT_GRPC_DEADLINE = 60 * 3 + 5
 
-class SampleAssistant(object):
+class GoogleAssistant(object):
     
     def __init__(self, language_code, device_model_id, device_id, conversation_stream, channel, deadline_sec, device_handler):
         self.language_code = language_code
@@ -348,7 +346,7 @@ def main(api_endpoint, credentials, project_id,
             with open(device_config, 'w') as f:
                 json.dump(payload, f)
 
-    with SampleAssistant(lang, device_model_id, device_id,
+    with GoogleAssistant(lang, device_model_id, device_id,
                          conversation_stream,
                          grpc_channel, grpc_deadline,
                          device_handler) as assistant:
