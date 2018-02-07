@@ -40,6 +40,7 @@ EVENT = "send_sms"
 AUTH_URL = "/with/key/" + config.get('keys', 'IFTTT_MAKER_KEY')
 TWILIO_ACCOUNT_SID = config.get('keys', 'TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = config.get('keys', 'TWILIO_AUTH_TOKEN')
+CLOUD_FUNCTION_ENDPOINT = config.get('GOOGLE', 'CLOUD_FUNCTION_ENDPOINT')
 
 
 class Alerter(object):
@@ -67,11 +68,21 @@ class Alerter(object):
             firebase.log(self.gps.getPosition())
             sleep(10)
 
+    def sendPushNotification(self, message):
+        """Sends a push notification to the Tracker users
+
+        Arguments:
+            message {dict} -- dict containing location
+        """
+        #payload = "{ 'notification': { 'title':  'Person is in Emergency', 'body': 'Current location' } }"
+        payload = { "notification": { "title": "Hello", "body": "World" } }
+        return requests.post(CLOUD_FUNCTION_ENDPOINT, payload)
+
     def sendSMS_IFTTT(self, message):
         """Sends a POST request to IFTTT Maker service
 
         Arguments:
-            payload {dict} -- dict containing three values
+            message {dict} -- dict containing three values
 
         Returns:
             Response -- response text from IFTTT
@@ -108,5 +119,6 @@ class Alerter(object):
 
 if __name__ == "__main__":
     alerter = Alerter()
-    #alerter.sendSMS("Hello")
-    alerter.alert()
+    # alerter.sendSMS("Hello")
+    # alerter.alert()
+    alerter.sendPushNotification('Home')
