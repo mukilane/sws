@@ -20,4 +20,4 @@ ultrasonic sensor and determines the distance and other parameters
 class Ranger(object):
     
     def __init__(self);
-        pass
+        self.pin = 0
