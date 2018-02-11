@@ -43,7 +43,7 @@ def detect_intent_audio(project_id, session_id, audio_file_path,
     print('Fulfillment text: {}\n'.format(
         response.query_result.fulfillment_text))
 
-    return response.query.intent.display_name
+    return response.query_result.intent.display_name
 
 
 def start():

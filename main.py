@@ -32,7 +32,7 @@ The various streams/actions are:
 
 import threading
 
-import assist
+import pushassist1
 import dialogflowAssistant
 from alert import Alerter
 from config_reader import config
@@ -44,7 +44,7 @@ from maps import Maps
 class SANAS(object):
 
     def __init__(self):
-        self.assistant = assist
+        self.assistant = pushassist1
         self.gps = GPS()
         self.maps = Maps()
         self.hardware = None #Hardware()
@@ -111,4 +111,5 @@ class SANAS(object):
 if __name__ == "__main__":
     sanas = SANAS()
     sanas.start()
-    sanas.listen("d")
+    #sanas.listen("d")
+    sanas.assist('d')
