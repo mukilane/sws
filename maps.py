@@ -79,7 +79,7 @@ class Maps(object):
         except:
             print("Error occured while getting diretions")
 
-    def isDestinationReached():
+    def isDestinationReached(self):
         """Check if the destination is reached"""
 
     def getCurrentLocation(self):

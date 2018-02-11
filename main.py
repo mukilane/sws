@@ -79,7 +79,7 @@ class SANAS(object):
         """Calls the navigation stream"""
         if not self.isNavigationRunning:
             self.isNavigationRunning = True
-            self.maps.startNavigation()
+            self.maps.startNavigation("home", "cape canevaral")
             self.isNavigationRunning = False
         else:
             print("Action already running")
@@ -92,7 +92,7 @@ class SANAS(object):
         """
         if not self.isAlertRunning:
             self.isAlertRunning = True
-            self.alerter.sendSMS()
+            self.alerter.sendSMS("I am in emergency")
             self.isAlertRunning = False
         else:
             print("Action already running")

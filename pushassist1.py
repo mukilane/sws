@@ -134,9 +134,9 @@ class ActionAssistant(object):
         """Yields: AssistRequest messages to send to the API."""
 
         dialog_state_in = embedded_assistant_pb2.DialogStateIn(
-                language_code=self.language_code,
-                conversation_state=b''
-            )
+            language_code=self.language_code,
+            conversation_state=b''
+        )
         if self.conversation_state:
             logging.debug('Sending conversation state.')
             dialog_state_in.conversation_state = self.conversation_state
@@ -163,16 +163,17 @@ class ActionAssistant(object):
             # Subsequent requests need audio data, but not config.
             yield embedded_assistant_pb2.AssistRequest(audio_in=data)
 
+
 def main(*args, **kwargs):
     api_endpoint = ASSISTANT_API_ENDPOINT
     credentials = os.path.join(click.get_app_dir('google-oauthlib-tool'),
-                                   'credentials.json')
+                               'credentials.json')
     project_id = 'project-harmony'
     device_model_id = 'base-model'
     device_id = str(uuid.uuid1())
     device_config = os.path.join(
-                  click.get_app_dir('googlesamples-assistant'),
-                  'device_config.json')
+        click.get_app_dir('googlesamples-assistant'),
+        'device_config.json')
     lang = 'en-US'
     verbose = False
     audio_sample_rate = audio_helpers.DEFAULT_AUDIO_SAMPLE_RATE
@@ -235,13 +236,12 @@ def main(*args, **kwargs):
             logging.info('Turning device on')
         else:
             logging.info('Turning device off')
-        
-    assistant = ActionAssistant(lang, device_model_id, device_id,
-                         conversation_stream,
-                         grpc_channel, grpc_deadline,
-                         device_handler)
 
-    
+    assistant = ActionAssistant(lang, device_model_id, device_id,
+                                conversation_stream,
+                                grpc_channel, grpc_deadline,
+                                device_handler)
+
     wait_for_user_trigger = not once
     while True:
         if wait_for_user_trigger:
@@ -254,6 +254,7 @@ def main(*args, **kwargs):
         # If we only want one conversation, break.
         if once and (not continue_conversation):
             break
+
 
 if __name__ == '__main__':
     main()
