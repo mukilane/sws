@@ -70,7 +70,7 @@ class SANAS(object):
         """Calls the assist stream"""
         if not self.isAssistantRunning:
             self.isAssistantRunning = True
-            self.assistant.main()
+            self.assistant.main(False, False)
             self.isAssistantRunning = False
         else:
             print("Action already running")
@@ -99,13 +99,14 @@ class SANAS(object):
 
     def listen(self, channel):
         """Invokes the dialogflow agent"""
-        intent = dialogflowAssistant.start()
-        if intent == "Alert":
-            self.alert(None)
-        elif intent == "Navigate":
-            self.navigate(None)
-        elif intent == "Assist":
-            self.assist(None)
+        self.assistant.main(True, True)
+        # intent = dialogflowAssistant.start()
+        # if intent == "Alert":
+        #     self.alert(None)
+        # elif intent == "Navigate":
+        #     self.navigate(None)
+        # elif intent == "Assist":
+        #     self.assist(None)
 
 
 if __name__ == "__main__":

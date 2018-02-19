@@ -93,7 +93,7 @@ class Maps(object):
             data = self.maps.geolocate()['location']
             self.currentLocation['lat'] = data['lat']
             self.currentLocation['lng'] = data['lng']
-        print(self.currentLocation)
+        return self.currentLocation
 
     def getNearby(self):
         """Gets the nearby places 
@@ -145,4 +145,5 @@ class Maps(object):
 if __name__ == "__main__":
     maps = Maps()
     # maps.getDirections('ashok pillar', 'tambaram', 'walking')
-    maps.getCurrentLocation()
+    maps.getBusRoute()
+    # maps.getCurrentLocation()
