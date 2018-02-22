@@ -115,6 +115,8 @@ class Hardware(object):
         GPIO.add_event_detect(GPIO_NAVIGATE_PIN, GPIO.FALLING,
                               callback=navigate, bouncetime=300)
         self.available = True
+        while True:
+            pass
 
 if __name__== "__main__":
     h = Hardware()
