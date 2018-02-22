@@ -29,7 +29,7 @@ Components to be interfaced are
     from it continuously in a separate thread.
 """
 
-import Rpi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 import serial
 import threading
