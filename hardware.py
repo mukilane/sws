@@ -56,7 +56,7 @@ class Hardware(object):
             assist {func} -- Callback to start the assistant
         """
         # GPIO set to BCM mode
-        GPIO.setMode(GPIO.BCM)
+        GPIO.setmode(GPIO.BCM)
         # Pin Setup
         GPIO.setup(GPIO_ALERT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(GPIO_ASSISTANT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -101,7 +101,7 @@ class Hardware(object):
         def navigate(cb):
             print("Navigate")
         
-        GPIO.setMode(GPIO.BCM)
+        GPIO.setmode(GPIO.BCM)
         # Pin Setup
         GPIO.setup(GPIO_ALERT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(GPIO_ASSISTANT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
