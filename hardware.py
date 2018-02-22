@@ -45,7 +45,7 @@ class Hardware(object):
 
     def __init__(self):
         self.available = False
-        self.ranger_thread = threading.Thread(target=self.ranger, daemon=True)
+        # self.ranger_thread = threading.Thread(target=self.ranger, daemon=True)
 
     def setup(self, alert, navigate, assist):
         """Sets up all the GPIO pins and callbacks
@@ -90,3 +90,32 @@ class Hardware(object):
         while True:
             val = port.readline()
             # Notify based on 
+ 
+    def test(self):
+        def alert(cb):
+            print("Alert")
+        
+        def assist(cb):
+            print("Assist")
+        
+        def navigate(cb):
+            print("Navigate")
+        
+        GPIO.setMode(GPIO.BCM)
+        # Pin Setup
+        GPIO.setup(GPIO_ALERT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(GPIO_ASSISTANT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(GPIO_NAVIGATE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # Callbacks
+        # Boucetime is set to debounce the button presses   
+        GPIO.add_event_detect(GPIO_ALERT_PIN, GPIO.FALLING,
+                              callback=alert, bouncetime=300)
+        GPIO.add_event_detect(GPIO_ASSISTANT_PIN, GPIO.FALLING,
+                              callback=assist, bouncetime=300)
+        GPIO.add_event_detect(GPIO_NAVIGATE_PIN, GPIO.FALLING,
+                              callback=navigate, bouncetime=300)
+        self.available = True
+
+if __name__== "__main__":
+    h = Hardware()
+    h.test()
