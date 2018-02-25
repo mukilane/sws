@@ -29,6 +29,7 @@ Todo:
 from time import sleep
 
 import requests
+import json
 from twilio.rest import Client
 
 from config_reader import config
@@ -74,9 +75,14 @@ class Alerter(object):
         Arguments:
             message {dict} -- dict containing location
         """
-        #payload = "{ 'notification': { 'title':  'Person is in Emergency', 'body': 'Current location' } }"
-        payload = { "notification": { "title": "Hello", "body": "World" } }
-        return requests.post(CLOUD_FUNCTION_ENDPOINT, payload)
+        
+        location = json.dumps(firebase.getPosition())
+        payload = { "notification": { "title": "Person in Emergency", "body": location } }
+        try:
+            requests.post(CLOUD_FUNCTION_ENDPOINT, json=payload, timeout=1)
+        except requests.exceptions.ReadTimeout:
+            pass
+        
 
     def sendSMS_IFTTT(self, message):
         """Sends a POST request to IFTTT Maker service

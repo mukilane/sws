@@ -145,5 +145,5 @@ class Maps(object):
 if __name__ == "__main__":
     maps = Maps()
     # maps.getDirections('ashok pillar', 'tambaram', 'walking')
-    maps.getBusRoute()
-    # maps.getCurrentLocation()
+    # maps.getBusRoute()
+    print(maps.getCurrentLocation())
