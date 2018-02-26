@@ -69,6 +69,15 @@ class Alerter(object):
             firebase.log(self.gps.getPosition())
             sleep(10)
 
+    def gps_spoof(self):
+        """Spoofs the GPS coordinates for demo
+        """
+        firebase.newSession()
+        positions = json.load(open('gps_spoof.json'))
+        for pos in positions['locations']:
+            firebase.log(pos)
+            sleep(2)
+
     def sendPushNotification(self, message):
         """Sends a push notification to the Tracker users
 
@@ -127,4 +136,5 @@ if __name__ == "__main__":
     alerter = Alerter()
     # alerter.sendSMS("Hello")
     # alerter.alert()
-    alerter.sendPushNotification('Home')
+    # alerter.sendPushNotification('Home')
+    alerter.gps_spoof()
