@@ -40,7 +40,6 @@ from gps import GPS
 #from hardware import Hardware
 from maps import Maps
 
-
 class SANAS(object):
 
     def __init__(self):
@@ -49,7 +48,9 @@ class SANAS(object):
         self.maps = Maps()
         self.hardware = None #Hardware()
         self.alerter = Alerter()
-
+        
+        self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
+        self.assistThread.daemon = False
         self.isAssistantRunning = False
         self.isAlertRunning = False
         self.isNavigationRunning = False
@@ -70,9 +71,11 @@ class SANAS(object):
         """Calls the assist stream"""
         if not self.isAssistantRunning:
             self.isAssistantRunning = True
-            self.assistant.main(False, False)
+            # self.assistant.main(False, False)
+            self.assistThread.start()
             self.isAssistantRunning = False
         else:
+            self.assistThread.join()
             print("Action already running")
 
     def navigate(self, channel):
