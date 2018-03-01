@@ -37,7 +37,7 @@ import dialogflowAssistant
 from alert import Alerter
 from config_reader import config
 from gps import GPS
-#from hardware import Hardware
+from hardware import Hardware
 from maps import Maps
 
 class SANAS(object):

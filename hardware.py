@@ -32,7 +32,7 @@ Components to be interfaced are
 import RPi.GPIO as GPIO
 import time
 import serial
-import threading
+# import threading
 
 GPIO_ALERT_PIN = 22
 GPIO_ASSISTANT_PIN = 18
@@ -116,7 +116,7 @@ class Hardware(object):
                               callback=navigate, bouncetime=300)
         self.available = True
         while True:
-            
+            pass
 
 if __name__== "__main__":
     h = Hardware()
