@@ -46,7 +46,7 @@ class SANAS(object):
         self.assistant = pushassist1
         self.gps = GPS()
         self.maps = Maps()
-        self.hardware = None #Hardware()
+        self.hardware = Hardware()
         self.alerter = Alerter()
         
         self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))

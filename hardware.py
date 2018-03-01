@@ -116,7 +116,7 @@ class Hardware(object):
                               callback=navigate, bouncetime=300)
         self.available = True
         while True:
-            pass
+            
 
 if __name__== "__main__":
     h = Hardware()
