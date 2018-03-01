@@ -385,19 +385,26 @@ def main(once, action, *args, **kwargs):
                                 grpc_channel, grpc_deadline,
                                 device_handler)
 
-    wait_for_user_trigger = not once
-    while True:
-        if wait_for_user_trigger:
-            click.pause(info='Press Enter to send a new request...')
-        continue_conversation = assistant.assist()
-        # wait for user trigger if there is no follow-up turn in
-        # the conversation.
-        wait_for_user_trigger = not continue_conversation
+    return assistant
+    # wait_for_user_trigger = not once
+    # while True:
+    #     if wait_for_user_trigger:
+    #         click.pause(info='Press Enter to send a new request...')
+    #     continue_conversation = assistant.assist()
+    #     # wait for user trigger if there is no follow-up turn in
+    #     # the conversation.
+    #     wait_for_user_trigger = not continue_conversation
 
-        # If we only want one conversation, break.
-        if once and (not continue_conversation):
-            break
+    #     # If we only want one conversation, break.
+    #     if once and (not continue_conversation):
+    #         break       
 
 
 if __name__ == '__main__':
-    main(False, True)
+    assistant = main(False, False)
+    print("Ready")
+    while True:
+        continue_conversation = assistant.assist()
+
+        if not continue_conversation:
+            break

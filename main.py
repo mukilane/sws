@@ -49,8 +49,10 @@ class SANAS(object):
         self.hardware = Hardware()
         self.alerter = Alerter()
         
-        self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
-        self.assistThread.daemon = False
+        # self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
+        # self.assistThread.start()
+        # self.assistThread.daemon = False
+        self.SimpleAssistant = self.assistant.main(False, False)
         self.isAssistantRunning = False
         self.isAlertRunning = False
         self.isNavigationRunning = False
@@ -71,12 +73,18 @@ class SANAS(object):
         """Calls the assist stream"""
         if not self.isAssistantRunning:
             self.isAssistantRunning = True
-            # self.assistant.main(False, False)
-            self.assistThread.start()
+            print("Starting Assistant")
+            while True:
+                continue_conversation = self.SimpleAssistant.assist()
+
+                if not continue_conversation:
+                    break
+            print("Stopping Assistant")
             self.isAssistantRunning = False
         else:
-            self.assistThread.join()
-            print("Action already running")
+            print("Assistant already running")
+
+            
 
     def navigate(self, channel):
         """Calls the navigation stream"""
