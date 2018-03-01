@@ -59,7 +59,7 @@ class SANAS(object):
         """Starts listening on the hardware"""
         try:
             pass
-            # self.hardware.setup(self.alert, self.navigate, self.assist)
+            self.hardware.setup(self.alert, self.navigate, self.assist)
         except:
             print("Error during hardware setup")
 
