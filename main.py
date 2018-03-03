@@ -52,7 +52,7 @@ class SANAS(object):
         # self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
         # self.assistThread.start()
         # self.assistThread.daemon = False
-        self.SimpleAssistant = self.assistant.main(False, False)
+        self.SimpleAssistant = self.assistant.main(False, False) # Returns a trigger function
         self.isAssistantRunning = False
         self.isAlertRunning = False
         self.isNavigationRunning = False
@@ -74,11 +74,7 @@ class SANAS(object):
         if not self.isAssistantRunning:
             self.isAssistantRunning = True
             print("Starting Assistant")
-            while True:
-                continue_conversation = self.SimpleAssistant.assist()
-
-                if not continue_conversation:
-                    break
+            self.SimpleAssistant()
             print("Stopping Assistant")
             self.isAssistantRunning = False
         else:
