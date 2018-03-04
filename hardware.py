@@ -18,9 +18,9 @@ This modules implements methods to interface with the hardware (Raspberry Pi).
 
 Components to be interfaced are
 1. Buttons 
-    a. Alert button - BCM_22 / Phy_15
-    b. Navigate button - BCM_23 / Phy_16
-    c. Assistant button - BCM_24 / Phy_18
+    a. Alert button - BCM_6 / Phy_31
+    b. Navigate button - BCM_13 / Phy_33
+    c. Assistant button - BCM_26 / Phy_37
 
     These buttons are push buttons which are pulled down.
     Events are trigged on falling edge (3v3 to 0).
@@ -34,9 +34,9 @@ import time
 import serial
 # import threading
 
-GPIO_ALERT_PIN = 22
-GPIO_ASSISTANT_PIN = 18
-GPIO_NAVIGATE_PIN = 23
+GPIO_ALERT_PIN = 6
+GPIO_ASSISTANT_PIN = 26
+GPIO_NAVIGATE_PIN = 13
 GPIO_CLASSIFIER_PIN = 19
 
 
