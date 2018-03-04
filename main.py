@@ -52,7 +52,7 @@ class SANAS(object):
         # self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
         # self.assistThread.start()
         # self.assistThread.daemon = False
-        self.SimpleAssistant = self.assistant.main(False, False) # Returns a trigger function
+        self.SimpleAssistant = self.assistant.main(True, False) # Returns a trigger function
         self.isAssistantRunning = False
         self.isAlertRunning = False
         self.isNavigationRunning = False
