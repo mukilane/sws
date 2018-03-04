@@ -59,15 +59,21 @@ class Alerter(object):
         self.gps = GPS()
 
     def alert(self):
-        """Starts a logging session
+        """Starts a logging session and sends SMS and push notification
 
         Logs the location of the user into the Firestore until exit. The 
         time interval between the logs is 10 seconds
         """
-        firebase.newSession()
-        while True:
-            firebase.log(self.gps.getPosition())
-            sleep(10)
+        self.sendSMS("I am in emergency")
+        self.sendPushNotification()
+        # For Demo
+        self.gps_spoof()
+
+        # Actual code
+        # firebase.newSession()
+        # while True:
+        #     firebase.log(self.gps.getPosition())
+        #     sleep(10)
 
     def gps_spoof(self):
         """Spoofs the GPS coordinates for demo
@@ -78,7 +84,7 @@ class Alerter(object):
             firebase.log(pos)
             sleep(2)
 
-    def sendPushNotification(self, message):
+    def sendPushNotification(self):
         """Sends a push notification to the Tracker users
 
         Arguments:

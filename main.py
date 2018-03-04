@@ -120,4 +120,6 @@ if __name__ == "__main__":
     sanas = SANAS()
     sanas.start()
     #sanas.listen("d")
-    sanas.assist('d')
+    # sanas.assist('d')
+    while True:
+        pass
