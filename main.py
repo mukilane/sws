@@ -74,7 +74,9 @@ class SANAS(object):
         if not self.isAssistantRunning:
             self.isAssistantRunning = True
             print("Starting Assistant")
+            self.hardware.light(True)
             self.SimpleAssistant()
+            self.hardware.light(False)
             print("Stopping Assistant")
             self.isAssistantRunning = False
         else:

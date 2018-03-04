@@ -85,6 +85,14 @@ class Hardware(object):
         """Cleans up all the ports used"""
         GPIO.cleanup()
     
+    def light(self, status):
+        """Lights an led to indicate assistant status
+        """
+        if(status == True):
+            GPIO.output(GPIO_ASSISTANT_LED, GPIO.HIGH)
+        else:
+            GPIO.output(GPIO_ASSISTANT_LED, GPIO.LOW)
+
     def ranger(self):
         """Reads ultrasonic sensor data
         

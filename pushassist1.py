@@ -401,9 +401,9 @@ def main(once, action, *args, **kwargs):
     def trigger():
         wait_for_user_trigger = not once
         while True:
-            if wait_for_user_trigger:
-                # click.pause(info='Press Enter to send a new request...')
-                pass
+            # if wait_for_user_trigger:
+            #     # click.pause(info='Press Enter to send a new request...')
+            #     pass
             continue_conversation = assistant.assist()
             # wait for user trigger if there is no follow-up turn in
             # the conversation.
