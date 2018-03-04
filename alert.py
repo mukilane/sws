@@ -78,6 +78,7 @@ class Alerter(object):
     def gps_spoof(self):
         """Spoofs the GPS coordinates for demo
         """
+        print("Logging Location")
         firebase.newSession()
         positions = json.load(open('gps_spoof.json'))
         for pos in positions['locations']:
@@ -90,7 +91,7 @@ class Alerter(object):
         Arguments:
             message {dict} -- dict containing location
         """
-        
+        print("Sending Push Notification")
         location = json.dumps(firebase.getPosition())
         payload = { "notification": { "title": "Person in Emergency", "body": location } }
         try:
@@ -141,6 +142,6 @@ class Alerter(object):
 if __name__ == "__main__":
     alerter = Alerter()
     # alerter.sendSMS("Hello")
-    # alerter.alert()
-    # alerter.sendPushNotification('Home')
-    alerter.gps_spoof()
+    alerter.alert()
+    # alerter.sendPushNotification()
+    # alerter.gps_spoof()

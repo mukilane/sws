@@ -99,7 +99,7 @@ class SANAS(object):
         """
         if not self.isAlertRunning:
             self.isAlertRunning = True
-            self.alerter.sendSMS("I am in emergency")
+            self.alerter.alert()
             self.isAlertRunning = False
         else:
             print("Action already running")
