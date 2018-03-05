@@ -13,10 +13,12 @@ def detect_intent_stream(project_id, session_id, audio_file_path,
 
     # Note: hard coding audio_encoding and sample_rate_hertz for simplicity.
     audio_encoding = dialogflow.enums.AudioEncoding.AUDIO_ENCODING_LINEAR_16
-    sample_rate_hertz = 16000
+    sample_rate_hertz = 44100
 
     session = session_client.session_path(project_id, session_id)
     print('Session path: {}\n'.format(session))
+
+    audio.record()
 
     def request_generator(audio_config, audio_file_path):
         query_input = dialogflow.types.QueryInput(audio_config=audio_config)

@@ -48,7 +48,7 @@ class SANAS(object):
         self.maps = Maps()
         self.hardware = Hardware()
         self.alerter = Alerter()
-        
+        self.dialogflowAssistant = dialogflowAssistant()
         # self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
         # self.assistThread.start()
         # self.assistThread.daemon = False
@@ -82,8 +82,6 @@ class SANAS(object):
         else:
             print("Assistant already running")
 
-            
-
     def navigate(self, channel):
         """Calls the navigation stream"""
         if not self.isNavigationRunning:
@@ -108,14 +106,14 @@ class SANAS(object):
 
     def listen(self, channel):
         """Invokes the dialogflow agent"""
-        self.assistant.main(True, True)
-        # intent = dialogflowAssistant.start()
-        # if intent == "Alert":
-        #     self.alert(None)
-        # elif intent == "Navigate":
-        #     self.navigate(None)
-        # elif intent == "Assist":
-        #     self.assist(None)
+        # self.assistant.main(True, True)
+        intent = self.dialogflowAssistant.detect()
+        if intent == "Alert":
+            self.alert(None)
+        elif intent == "Navigate":
+            self.navigate(None)
+        elif intent == "Assist":
+            self.assist(None)
 
 
 if __name__ == "__main__":
@@ -123,5 +121,6 @@ if __name__ == "__main__":
     sanas.start()
     #sanas.listen("d")
     # sanas.assist('d')
+    sanas.listen("d")
     while True:
         pass
