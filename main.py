@@ -33,7 +33,7 @@ The various streams/actions are:
 import threading
 
 import pushassist1
-import dialogflowAssistant
+from dialogflowAssistant import DialogflowAssistant
 from alert import Alerter
 from config_reader import config
 from gps import GPS
@@ -48,7 +48,7 @@ class SANAS(object):
         self.maps = Maps()
         self.hardware = Hardware()
         self.alerter = Alerter()
-        self.dialogflowAssistant = dialogflowAssistant()
+        self.dialogflowAssistant = DialogflowAssistant()
         # self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
         # self.assistThread.start()
         # self.assistThread.daemon = False
@@ -61,7 +61,7 @@ class SANAS(object):
         """Starts listening on the hardware"""
         try:
             pass
-            self.hardware.setup(self.alert, self.navigate, self.assist)
+            self.hardware.setup(self.alert, self.listen, self.assist)
         except:
             print("Error during hardware setup")
 
@@ -107,6 +107,7 @@ class SANAS(object):
     def listen(self, channel):
         """Invokes the dialogflow agent"""
         # self.assistant.main(True, True)
+        print("Starting Dialogflow Assistant")
         intent = self.dialogflowAssistant.detect()
         if intent == "Alert":
             self.alert(None)
@@ -121,6 +122,6 @@ if __name__ == "__main__":
     sanas.start()
     #sanas.listen("d")
     # sanas.assist('d')
-    sanas.listen("d")
+    # sanas.listen("d")
     while True:
         pass
