@@ -1,9 +1,24 @@
+# Copyright (C) 2018 Mukil Elango
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import argparse
 import uuid
 
 import dialogflow
 
 import audio
+import tts
 from config_reader import config
 
 PROJECT_ID = config.get('GOOGLE', 'GOOGLE_CLOUD_PROJECT_ID')
@@ -19,7 +34,8 @@ class DialogflowAssistant(object):
         self.sample_rate_hertz = 44100
         self.language_code = "en-US"
         self.audio_file_path = "speech.wav"
-        self.session = self.session_client.session_path(self.project_id, self.session_id)
+        self.session = self.session_client.session_path(
+            self.project_id, self.session_id)
         print('Session path: {}\n'.format(self.session))
 
     def detect(self):
@@ -48,6 +64,7 @@ class DialogflowAssistant(object):
             response.query_result.intent_detection_confidence))
         print('Fulfillment text: {}\n'.format(
             response.query_result.fulfillment_text))
+        tts.speak(response.query_result.fulfillment_text)
 
         return response.query_result.intent.display_name
 

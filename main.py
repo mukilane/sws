@@ -113,9 +113,12 @@ class SANAS(object):
             self.alert(None)
         elif intent == "Navigate":
             self.navigate(None)
-        elif intent == "Assist":
+        elif intent == "Assistant":
             self.assist(None)
-
+        elif intent == "Nearby":
+            self.maps.getNearby()
+        elif intent == "Bearing":
+            self.maps.getBearing()
 
 if __name__ == "__main__":
     sanas = SANAS()
