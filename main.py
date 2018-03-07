@@ -113,12 +113,15 @@ class SANAS(object):
             self.alert(None)
         elif intent == "Navigate":
             self.navigate(None)
-        elif intent == "Assistant":
+        elif intent == "ASSIST":
             self.assist(None)
-        elif intent == "Nearby":
+        elif intent == "NEARBY":
             self.maps.getNearby()
-        elif intent == "Bearing":
+        elif intent == "BEARING":
             self.maps.getBearing()
+        elif intent == "BLE_BUS":
+            self.maps.getBusRoute("home")
+        elif intent == 
 
 if __name__ == "__main__":
     sanas = SANAS()
@@ -128,3 +131,4 @@ if __name__ == "__main__":
     # sanas.listen("d")
     while True:
         pass
+        sanas.assist("d")

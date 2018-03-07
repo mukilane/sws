@@ -15,8 +15,11 @@
 from google_speech import Speech
 
 def speak(text):
-    lang = "en-US"
+    lang = "en-IN"
     speech = Speech(text, lang)
     # SOX Effects http://sox.sourceforge.net/sox.html#EFFECTS
     sox_effects = ("speed", "1")
     speech.play(sox_effects)
+
+if __name__ == "__main__":
+    speak("Hello world")

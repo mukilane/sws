@@ -124,7 +124,7 @@ class Maps(object):
         for step in self.directions[0]['legs']:
             print(step)
 
-    def getBusRoute(self):
+    def getBusRoute(self, destination):
         """Retrieves the bus routes from source to destination"""
         result = self.maps.directions(
             origin="Ashok pillar, Chennai",
