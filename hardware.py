@@ -43,7 +43,6 @@ GPIO_POWER_LED = 23
 GPIO_ASSISTANT_LED = 24
 
 
-
 class Hardware(object):
     """Wrapper for all the hardware interfaces and events"""
 
@@ -53,7 +52,7 @@ class Hardware(object):
 
     def setup(self, alert, navigate, assist):
         """Sets up all the GPIO pins and callbacks
-        
+
         Arguments:
             alert {func} -- Callback to alert 
             navigate {func} -- Callback to start navigation
@@ -71,7 +70,7 @@ class Hardware(object):
         GPIO.setup(GPIO_POWER_LED, GPIO.OUT)
 
         # Callbacks
-        # Boucetime is set to debounce the button presses   
+        # Boucetime is set to debounce the button presses
         GPIO.add_event_detect(GPIO_ALERT_PIN, GPIO.FALLING,
                               callback=alert, bouncetime=300)
         GPIO.add_event_detect(GPIO_ASSISTANT_PIN, GPIO.FALLING,
@@ -84,7 +83,7 @@ class Hardware(object):
     def cleanup(self):
         """Cleans up all the ports used"""
         GPIO.cleanup()
-    
+
     def light(self, status):
         """Lights an led to indicate assistant status
         """
@@ -95,7 +94,7 @@ class Hardware(object):
 
     def ranger(self):
         """Reads ultrasonic sensor data
-        
+
         Connects to Arduino through I2C and receives data from the 
         ultrasonic sensor.
         This function will run in a separate thread.
@@ -107,25 +106,25 @@ class Hardware(object):
             exit()
         while True:
             val = port.readline()
-            # Notify based on 
- 
+            # Notify based on
+
     def test(self):
         def alert(cb):
             print("Alert")
-        
+
         def assist(cb):
             print("Assist")
-        
+
         def navigate(cb):
             print("Navigate")
-        
+
         GPIO.setmode(GPIO.BCM)
         # Pin Setup
         GPIO.setup(GPIO_ALERT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(GPIO_ASSISTANT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(GPIO_NAVIGATE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         # Callbacks
-        # Boucetime is set to debounce the button presses   
+        # Boucetime is set to debounce the button presses
         GPIO.add_event_detect(GPIO_ALERT_PIN, GPIO.FALLING,
                               callback=alert, bouncetime=300)
         GPIO.add_event_detect(GPIO_ASSISTANT_PIN, GPIO.FALLING,
@@ -136,6 +135,7 @@ class Hardware(object):
         while True:
             pass
 
-if __name__== "__main__":
+
+if __name__ == "__main__":
     h = Hardware()
     h.test()

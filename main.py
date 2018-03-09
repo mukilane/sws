@@ -40,6 +40,7 @@ from gps import GPS
 from hardware import Hardware
 from maps import Maps
 
+
 class SANAS(object):
 
     def __init__(self):
@@ -52,7 +53,8 @@ class SANAS(object):
         # self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
         # self.assistThread.start()
         # self.assistThread.daemon = False
-        self.SimpleAssistant = self.assistant.main(True, False) # Returns a trigger function
+        self.SimpleAssistant = self.assistant.main(
+            True, False)  # Returns a trigger function
         self.isAssistantRunning = False
         self.isAlertRunning = False
         self.isNavigationRunning = False
@@ -121,12 +123,13 @@ class SANAS(object):
             self.maps.getBearing()
         elif intent == "BLE_BUS":
             self.maps.getBusRoute("home")
-        elif intent == 
+        elif intent ==
+
 
 if __name__ == "__main__":
     sanas = SANAS()
     sanas.start()
-    #sanas.listen("d")
+    # sanas.listen("d")
     # sanas.assist('d')
     # sanas.listen("d")
     while True:

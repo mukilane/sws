@@ -36,6 +36,7 @@ import googlemaps
 
 import gps
 from config_reader import config
+from tts import speak
 
 GOOGLE_MAPS_API_KEY = config.get('keys', 'GOOGLE_MAPS_API_KEY')
 
@@ -56,7 +57,7 @@ class Maps(object):
         except:
             print("Error occured during Maps Initialization")
 
-    def strip_tags(html):
+    def strip_tags(self, html):
         return re.sub('<[^<]+?>', '', html)
 
     def getDirections(self, source, destination, mode):
@@ -74,7 +75,7 @@ class Maps(object):
             self.steps = self.directions[0]['legs'][0]['steps']
             # for leg in legs:
             #     for step in leg["steps"]:
-            #         print(strip_tags(step["html_instructions"]))
+            #         print(self.strip_tags(step["html_instructions"]))
             print(self.directions)
         except:
             print("Error occured while getting diretions")
@@ -106,6 +107,7 @@ class Maps(object):
             location=location,
             radius=100
         )['results']
+        speak(result)
         return result
 
     def getBearing(self):
@@ -118,6 +120,7 @@ class Maps(object):
         result = self.maps.reverse_geocode(
             location
         )[0]['address_components'][0]
+        speak(result['long_name'])
         return result
 
     def startNavigation(self, source, destination):
@@ -146,4 +149,4 @@ if __name__ == "__main__":
     maps = Maps()
     # maps.getDirections('ashok pillar', 'tambaram', 'walking')
     # maps.getBusRoute()
-    print(maps.getCurrentLocation())
+    print(maps.getNearby())

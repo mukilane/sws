@@ -93,12 +93,12 @@ class Alerter(object):
         """
         print("Sending Push Notification")
         location = json.dumps(firebase.getPosition())
-        payload = { "notification": { "title": "Person in Emergency", "body": location } }
+        payload = {"notification": {
+            "title": "Person in Emergency", "body": location}}
         try:
             requests.post(CLOUD_FUNCTION_ENDPOINT, json=payload, timeout=1)
         except requests.exceptions.ReadTimeout:
             pass
-        
 
     def sendSMS_IFTTT(self, message):
         """Sends a POST request to IFTTT Maker service
