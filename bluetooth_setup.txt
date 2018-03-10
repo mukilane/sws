@@ -1,0 +1,15 @@
+1. bluetoothctl
+2. power on
+3. agent on
+4. default-agent
+5. scan on
+6. pair XX:XX:XX:XX:XX:XX
+7. trust XX:XX:XX:XX:XX:XX
+8. connect XX:XX:XX:XX:XX:XX
+9. pulseaudio --start
+10. pacmd list-cards
+11. sudo hcitool cmd 0x3F 0x01C 0x01 0x02 0x00 0x01 0x01
+12. pacmd set-card-profile bluez_card.A0_60_90_00_83_43 headset_head_unit
+13. pacmd set-card-profile bluez_card.A0_60_90_00_83_43 headset_head_unit
+14. pacmd set-default-sink bluez_sink.A0_60_90_00_83_43.headset_head_unit
+15. pacmd set-default-source bluez_source.A0_60_90_00_83_43.headset_head_unit
