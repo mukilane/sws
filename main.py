@@ -132,6 +132,11 @@ if __name__ == "__main__":
     # sanas.listen("d")
     # sanas.assist('d')
     # sanas.listen("d")
-    while True:
-        pass
-        sanas.assist("d")
+    try:
+        while True:
+            pass
+            # sanas.assist("d")
+    except KeyboardInterrupt:
+        print("Exiting")
+    finally:
+        sanas.stop()

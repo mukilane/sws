@@ -39,6 +39,7 @@ class BLE(object):
     def __init__(self):
         self.scanner = BeaconScanner(
             callback,
+            device_filter="123456789012345678901"
             packet_filter=EddystoneTLMFrame
         )
         self.mockdata = json.load(open('mock.json'))

@@ -23,19 +23,19 @@
 #include <NewPing.h>
 #define MAX 400
 
-NewPing right(3, 4, MAX);
-NewPing left(A1, A2, MAX);
+NewPing right(11, 10, MAX);
+NewPing left(13, 12, MAX);
 unsigned int l,r;
 
 void setup() {
-  pinMode(2, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(A0, OUTPUT);
-  pinMode(A3, OUTPUT);
-  digitalWrite(2, HIGH);
-  digitalWrite(5, LOW);
-  digitalWrite(A0, HIGH);
-  digitalWrite(A3, LOW);
+  pinMode(7, OUTPUT);
+//  pinMode(5, OUTPUT);
+//  pinMode(A0, OUTPUT);
+//  pinMode(A3, OUTPUT);
+  digitalWrite(7, HIGH);
+//  digitalWrite(5, LOW);
+//  digitalWrite(A0, HIGH);
+//  digitalWrite(A3, LOW);
   Serial.begin(9600);
 }
 
