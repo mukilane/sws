@@ -123,7 +123,7 @@ class SANAS(object):
             self.maps.getBearing()
         elif intent == "BLE_BUS":
             self.maps.getBusRoute("home")
-        elif intent ==
+        
 
 
 if __name__ == "__main__":
