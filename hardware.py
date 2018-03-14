@@ -32,6 +32,7 @@ Components to be interfaced are
 import RPi.GPIO as GPIO
 import time
 import serial
+from tts import speak
 # import threading
 
 GPIO_ALERT_PIN = 6
@@ -100,12 +101,21 @@ class Hardware(object):
         This function will run in a separate thread.
         """
         try:
-            port = serial.Serial('dev/ttyUSB0', 9600)
+            port = serial.Serial('/dev/ttyUSB0', 9600)
         except:
             print("Connection error")
             exit()
+        lastval = "SAFE"
         while True:
-            val = port.readline()
+            val = str(port.readline())
+            if lastval != val:
+                if val == "LEFT":
+                    speak("Obstacle on the left")
+                elif val == "RIGHT":
+                    speak("Obstacle on the right")
+                elif val == "CENTER":
+                    speak("Obstacle in front")
+                lastval = val
             # Notify based on
 
     def test(self):
