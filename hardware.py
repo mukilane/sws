@@ -107,7 +107,7 @@ class Hardware(object):
             exit()
         lastval = "SAFE"
         while True:
-            val = str(port.readline())
+            val = str(port.readline().strip().decode("utf-8"))
             if lastval != val:
                 if val == "LEFT":
                     speak("Obstacle on the left")

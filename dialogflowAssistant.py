@@ -67,7 +67,7 @@ class DialogflowAssistant(object):
 
         tts.speak(response.query_result.fulfillment_text)
 
-        return response.query_result.intent.display_name
+        return response
 
 
 if __name__ == '__main__':

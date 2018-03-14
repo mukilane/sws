@@ -96,7 +96,7 @@ class Maps(object):
             self.currentLocation['lng'] = data['lng']
         return self.currentLocation
 
-    def getNearby(self):
+    def getNearby(self, type):
         """Gets the nearby places 
 
         Returns:
@@ -105,7 +105,8 @@ class Maps(object):
         location = self.getCurrentLocation()
         result = self.maps.places_nearby(
             location=location,
-            radius=100
+            radius=100,
+            type=type
         )['results']
         speak(result)
         return result
@@ -125,28 +126,33 @@ class Maps(object):
 
     def startNavigation(self, source, destination):
         for step in self.directions[0]['legs']:
+            speak(step)
             print(step)
 
     def getBusRoute(self, destination):
         """Retrieves the bus routes from source to destination"""
         result = self.maps.directions(
-            origin="Ashok pillar, Chennai",
+            origin="Sri Sairam engineering College, chennai",
             destination="K.K.Nagar",
             mode="transit",
             transit_mode="bus"
         )
-        steps = []
+        steps = ""
         buses = []
+        busStr = ""
         for r in result[0]['legs'][0]['steps']:
-            steps.append(r['html_instructions'])
+            steps = steps + " " +r['html_instructions']
             if r['travel_mode'] == "TRANSIT":
                 bus = r['transit_details']['line']['short_name']
                 buses.append(bus)
+                busStr = busStr + " " + bus
+        speak("Available buses are" + busStr)
+        speak(steps)
         print(steps, buses)
 
 
 if __name__ == "__main__":
     maps = Maps()
     # maps.getDirections('ashok pillar', 'tambaram', 'walking')
-    # maps.getBusRoute()
-    print(maps.getNearby())
+    maps.getBusRoute("ashok pillar")
+    # print(maps.getNearby())

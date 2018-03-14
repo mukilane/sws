@@ -110,7 +110,8 @@ class SANAS(object):
         """Invokes the dialogflow agent"""
         # self.assistant.main(True, True)
         print("Starting Dialogflow Assistant")
-        intent = self.dialogflowAssistant.detect()
+        response = self.dialogflowAssistant.detect()
+        intent = response.query_result.action
         if intent == "Alert":
             self.alert(None)
         elif intent == "Navigate":
@@ -118,7 +119,10 @@ class SANAS(object):
         elif intent == "ASSIST":
             self.assist(None)
         elif intent == "NEARBY":
-            self.maps.getNearby()
+            if response.query_result.paramaters.fields.key == "place-type":
+                self.maps.getNearby(response.query_result.paramaters.fields.value.string_value)
+            else:
+                self.maps.getNearby("hospital")
         elif intent == "BEARING":
             self.maps.getBearing()
         elif intent == "BLE_BUS":
