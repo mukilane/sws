@@ -94,6 +94,11 @@ class Maps(object):
             data = self.maps.geolocate()['location']
             self.currentLocation['lat'] = data['lat']
             self.currentLocation['lng'] = data['lng']
+            
+            # For Demo
+            self.currentLocation['lat'] = 12.8008838
+            self.currentLocation['lng'] = 80.22403039999999
+            
         return self.currentLocation
 
     def getNearby(self, type):
@@ -120,8 +125,9 @@ class Maps(object):
         location = self.getCurrentLocation()
         result = self.maps.reverse_geocode(
             location
-        )[0]['address_components'][0]
-        speak(result['long_name'])
+        )[2]['formatted_address']
+        print(result)
+        speak(result)
         return result
 
     def startNavigation(self, source, destination):
@@ -132,27 +138,29 @@ class Maps(object):
     def getBusRoute(self, destination):
         """Retrieves the bus routes from source to destination"""
         result = self.maps.directions(
-            origin="Sri Sairam engineering College, chennai",
+            origin=self.getCurrentLocation(),
             destination="K.K.Nagar",
             mode="transit",
             transit_mode="bus"
         )
-        steps = ""
+        steps = []
         buses = []
         busStr = ""
         for r in result[0]['legs'][0]['steps']:
-            steps = steps + " " +r['html_instructions']
+            steps.append(r['html_instructions'])
             if r['travel_mode'] == "TRANSIT":
                 bus = r['transit_details']['line']['short_name']
                 buses.append(bus)
                 busStr = busStr + " " + bus
         speak("Available buses are" + busStr)
-        speak(steps)
+        for step in steps:
+            speak(step)
         print(steps, buses)
 
 
 if __name__ == "__main__":
     maps = Maps()
     # maps.getDirections('ashok pillar', 'tambaram', 'walking')
-    maps.getBusRoute("ashok pillar")
+    # maps.getBusRoute("ashok pillar")
+    maps.getBearing()
     # print(maps.getNearby())
