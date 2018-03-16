@@ -119,8 +119,9 @@ class SANAS(object):
         elif intent == "ASSIST":
             self.assist(None)
         elif intent == "NEARBY":
-            if response.query_result.paramaters.fields.key == "place-type":
-                self.maps.getNearby(response.query_result.paramaters.fields.value.string_value)
+            print(response.query_result.parameters.fields)
+            if response.query_result.parameters.fields == "place-type":
+                self.maps.getNearby(response.query_result.parameters.fields.value.string_value)
             else:
                 self.maps.getNearby("hospital")
         elif intent == "BEARING":

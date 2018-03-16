@@ -107,13 +107,17 @@ class Maps(object):
         Returns:
             dict -- An array of dict containing places
         """
+        places = []
         location = self.getCurrentLocation()
         result = self.maps.places_nearby(
             location=location,
             radius=100,
             type=type
         )['results']
-        speak(result)
+        for r in result:
+            places.append(r['name'])
+        print(places)
+        # speak(result)
         return result
 
     def getBearing(self):
@@ -162,5 +166,5 @@ if __name__ == "__main__":
     maps = Maps()
     # maps.getDirections('ashok pillar', 'tambaram', 'walking')
     # maps.getBusRoute("ashok pillar")
-    maps.getBearing()
-    # print(maps.getNearby())
+    # maps.getBearing()
+    print(maps.getNearby("hospital"))
