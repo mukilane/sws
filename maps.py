@@ -111,11 +111,16 @@ class Maps(object):
         location = self.getCurrentLocation()
         result = self.maps.places_nearby(
             location=location,
-            radius=100,
+            radius=300,
             type=type
         )['results']
+        if len(result) == 0:
+            speak("There are no nearby" + type)
+        else:
+            speak("Nearby " + type + " are")
         for r in result:
             places.append(r['name'])
+            speak(r['name'])
         print(places)
         # speak(result)
         return result
