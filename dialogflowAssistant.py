@@ -16,7 +16,7 @@ import argparse
 import uuid
 
 import dialogflow
-from google.protobuf.json_format import MessageToJson
+from google.protobuf.json_format import MessageToJson, MessageToDict
 
 import audio
 import tts
@@ -66,7 +66,7 @@ class DialogflowAssistant(object):
         print('Fulfillment text: {}\n'.format(
             response.query_result.fulfillment_text))
 
-        params = MessageToJson(response.query_result.parameters)
+        params = MessageToDict(response.query_result.parameters)
         print(params)
         tts.speak(response.query_result.fulfillment_text)
 
@@ -74,7 +74,6 @@ class DialogflowAssistant(object):
             'intent': response.query_result.action,
             'parameters': params
         }
-
         return result
 
 

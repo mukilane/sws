@@ -111,7 +111,7 @@ class SANAS(object):
         # self.assistant.main(True, True)
         print("Starting Dialogflow Assistant")
         response = self.dialogflowAssistant.detect()
-        intent = response.intent
+        intent = response['intent']
         if intent == "Alert":
             self.alert(None)
         elif intent == "Navigate":
@@ -119,9 +119,9 @@ class SANAS(object):
         elif intent == "ASSIST":
             self.assist(None)
         elif intent == "NEARBY":
-            print(response.parameters['place-type'])
-            if "place-type" in response.parameters:
-                self.maps.getNearby(response.parameters['place-type'])
+            print(response['parameters']['place-type'])
+            if "place-type" in response['parameters']:
+                self.maps.getNearby(response['parameters']['place-type'])
             else:
                 self.maps.getNearby("hospital")
         elif intent == "BEARING":
