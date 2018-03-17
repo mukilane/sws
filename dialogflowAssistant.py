@@ -66,11 +66,16 @@ class DialogflowAssistant(object):
         print('Fulfillment text: {}\n'.format(
             response.query_result.fulfillment_text))
 
-        mess = MessageToJson(response.query_result.parameters)
-        print(mess)
+        params = MessageToJson(response.query_result.parameters)
+        print(params)
         tts.speak(response.query_result.fulfillment_text)
 
-        return response
+        result = {
+            'intent': response.query_result.action,
+            'parameters': params
+        }
+
+        return result
 
 
 if __name__ == '__main__':
