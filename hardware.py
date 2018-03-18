@@ -32,6 +32,7 @@ Components to be interfaced are
 import RPi.GPIO as GPIO
 import time
 import serial
+from smbus2 import SMBus
 from tts import speak
 # import threading
 
@@ -93,6 +94,30 @@ class Hardware(object):
         else:
             GPIO.output(GPIO_ASSISTANT_LED, GPIO.LOW)
 
+    def rangerI2C(self):
+        """Reads the ultrasonic sensor data using I2C
+
+        Connections:
+        RPI GPIO2 --> Arduino A4 (SDA)
+        RPI GPIO4 --> Arduino A5 (SCL)
+        RPI GPIO5 --> Arduino GND
+
+        Slave Address : 0x04
+        """
+        bus = SMBus(1)
+        while True:
+            val = int(bus.read_byte(0x04))
+            sleep(1)
+            if val == 0:
+                print("SAFE")
+            elif val == 1:
+                print("LEFT")
+            elif val == 2:
+                print("RIGHT")
+            elif val == 3:
+                print("CENTER")
+
+
     def ranger(self):
         """Reads ultrasonic sensor data
 
@@ -148,4 +173,4 @@ class Hardware(object):
 
 if __name__ == "__main__":
     h = Hardware()
-    h.test()
+    h.rangerI2C()

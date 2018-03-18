@@ -20,12 +20,15 @@
 * 
 */
 
+#include <Wire.h>
 #include <NewPing.h>
 #define MAX 400
 
 NewPing right(11, 10, MAX);
 NewPing left(13, 12, MAX);
 unsigned int l,r;
+
+int dir = 0;
 
 void setup() {
   pinMode(7, OUTPUT);
@@ -37,6 +40,8 @@ void setup() {
 //  digitalWrite(A0, HIGH);
 //  digitalWrite(A3, LOW);
   Serial.begin(9600);
+  Wire.begin(0x04);
+  Wire.onRequest(sendData);
 }
 
 void loop() {
@@ -48,12 +53,21 @@ void loop() {
   if ( l < 30 || r < 30) {
     if (d > 10) {
         Serial.println("LEFT");
-    } else if ( d < 10) {
+        dir = 1;
+    } else if ( d < -10) {
         Serial.println("RIGHT");
+        dir = 2;
     } else {
         Serial.println("CENTER");
+        dir = 3;
     }
   } else {
       Serial.println("SAFE");
+      dir = 0;
   }
 }
+
+void sendData() {
+  Wire.write(dir);
+}
+

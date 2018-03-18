@@ -31,7 +31,6 @@ Todo:
 import re
 from datetime import datetime
 
-import dialogflow
 import googlemaps
 
 import gps
@@ -94,11 +93,11 @@ class Maps(object):
             data = self.maps.geolocate()['location']
             self.currentLocation['lat'] = data['lat']
             self.currentLocation['lng'] = data['lng']
-            
+
             # For Demo
-            self.currentLocation['lat'] = 12.8008838
-            self.currentLocation['lng'] = 80.22403039999999
-            
+            # self.currentLocation['lat'] = 12.8008838
+            # self.currentLocation['lng'] = 80.22403039999999
+
         return self.currentLocation
 
     def getNearby(self, type):
@@ -115,14 +114,31 @@ class Maps(object):
             type=type
         )['results']
         if len(result) == 0:
-            speak("There are no nearby" + type)
+            speak("There are no such places nearby")
         else:
-            speak("Nearby " + type + " are")
+            speak("Nearby listings are")
         for r in result:
             places.append(r['name'])
             speak(r['name'])
         print(places)
         # speak(result)
+        return result
+
+    def radar(self):
+        """Gets the nearby places 
+
+        Returns:
+            dict -- An array of dict containing places
+        """
+        places = []
+        location = self.getCurrentLocation()
+        result = self.maps.places_radar(
+            location=location,
+            radius=100,
+            keyword="street"
+        )['results']
+        print(result)
+        speak(result)
         return result
 
     def getBearing(self):
@@ -161,7 +177,7 @@ class Maps(object):
                 bus = r['transit_details']['line']['short_name']
                 buses.append(bus)
                 busStr = busStr + " " + bus
-        speak("Available buses are" + busStr)
+        speak("Available buses are " + busStr)
         for step in steps:
             speak(step)
         print(steps, buses)
@@ -172,4 +188,6 @@ if __name__ == "__main__":
     # maps.getDirections('ashok pillar', 'tambaram', 'walking')
     # maps.getBusRoute("ashok pillar")
     # maps.getBearing()
-    print(maps.getNearby("hospital"))
+    # print(maps.getNearby("hospital"))
+    print(maps.getCurrentLocation())
+    # print(maps.radar())
