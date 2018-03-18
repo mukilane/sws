@@ -25,7 +25,7 @@
 #define MAX 400
 
 NewPing right(11, 10, MAX);
-NewPing left(13, 12, MAX);
+NewPing left(9, 8, MAX);
 unsigned int l,r;
 
 int dir = 0;
@@ -39,6 +39,9 @@ void setup() {
 //  digitalWrite(5, LOW);
 //  digitalWrite(A0, HIGH);
 //  digitalWrite(A3, LOW);
+
+  pinMode(13, OUTPUT); // LED
+  digitalWrite(13, LOW);
   Serial.begin(9600);
   Wire.begin(0x04);
   Wire.onRequest(sendData);
@@ -61,9 +64,11 @@ void loop() {
         Serial.println("CENTER");
         dir = 3;
     }
+    digitalWrite(13, HIGH);
   } else {
       Serial.println("SAFE");
       dir = 0;
+      digitalWrite(13, LOW);
   }
 }
 

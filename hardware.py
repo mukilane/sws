@@ -107,7 +107,7 @@ class Hardware(object):
         bus = SMBus(1)
         lastval = 0
         while True:
-            val = int(bus.read_byte(0x04)
+            val = int(bus.read_byte(0x04))
             if lastval != val:
                 if val == 0:
                     print("SAFE")
