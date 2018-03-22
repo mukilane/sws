@@ -24,6 +24,9 @@
 #include <NewPing.h>
 #define MAX 400
 
+#define VBML 3
+#define VBMR 6
+
 NewPing right(11, 10, MAX);
 NewPing left(9, 8, MAX);
 unsigned int l,r;
@@ -39,6 +42,10 @@ void setup() {
 //  digitalWrite(5, LOW);
 //  digitalWrite(A0, HIGH);
 //  digitalWrite(A3, LOW);
+  pinMode(VBML, OUTPUT);
+  pinode(VBMLP, OUTPUT);
+  pinMode(VBMR, OUTPUT);
+  pinMode(VBMRP, OUTPUT);
 
   pinMode(13, OUTPUT); // LED
   digitalWrite(13, LOW);
@@ -55,12 +62,19 @@ void loop() {
   int d = l-r;
   if ( l < 30 || r < 30) {
     if (d > 10) {
+        int insty = map(l, 30, 5, 0, 255);
+        analogWrite(VBML, insty);
         Serial.println("LEFT");
         dir = 1;
     } else if ( d < -10) {
+        int insty = map(l, 30, 5, 0, 255);
+        analogWrite(VBMR, insty);
         Serial.println("RIGHT");
         dir = 2;
     } else {
+        int insty = map(l, 30, 5, 0, 255);
+        analogWrite(VBML, insty);
+        analogWrite(VBMR, insty);
         Serial.println("CENTER");
         dir = 3;
     }
