@@ -98,7 +98,7 @@ class Alerter(object):
         try:
             requests.post(CLOUD_FUNCTION_ENDPOINT, json=payload, timeout=1)
         except requests.exceptions.ReadTimeout:
-            pass
+            print("Error in sending the push notification")
 
     def sendSMS_IFTTT(self, message):
         """Sends a POST request to IFTTT Maker service
