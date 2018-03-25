@@ -99,12 +99,12 @@ class Hardware(object):
             callback()
             GPIO.output(GPIO_CLASSIFIER_LED, GPIO.LOW)
 
-
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(GPIO_CLASSIFIER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(GPIO_CLASSIFIER_LED, GPIO.OUT)
 
         GPIO.add_event_detect(GPIO_CLASSIFIER_PIN, GPIO.FALLING,
-                              calllback=call, bouncetime=300)
+                              callback=call, bouncetime=300)
         
 
     def cleanup(self):
@@ -201,7 +201,7 @@ class Hardware(object):
                               callback=assist, bouncetime=300)
         GPIO.add_event_detect(GPIO_NAVIGATE_PIN, GPIO.FALLING,
                               callback=navigate, bouncetime=300)
-        GPIO.add_event_detect(GPIO_NAVIGATE_PIN, GPIO.FALLING,
+        GPIO.add_event_detect(GPIO_CLASSIFIER_PIN, GPIO.FALLING,
                               callback=classifier, bouncetime=300)  
         self.available=True
         while True:

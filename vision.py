@@ -6,12 +6,15 @@ import requests
 import picamera
 from tts import speak
 
-import hardware
+# import hardware
 
 class ImageRecognizer(object):
     def __init__(self):
-        self.hardware = hardware.Hardware()
+        self.hardware = None
         self.image_file = './test.jpg'
+    
+    def setup(self):
+        self.hardware = hardware.Hardware()
         self.hardware.setupRecognizer(self.getDescription)
 
     def capture(self):
@@ -27,6 +30,7 @@ class ImageRecognizer(object):
 
     def getCaption(self):
         self.capture()
+        print("Captured")
         result = requests.post(
             "https://api.deepai.org/api/densecap",
             files={
@@ -36,10 +40,11 @@ class ImageRecognizer(object):
         )
         caption = result.json()['output']['captions'][0]['caption']
         speak(caption)
-        print(result.json())
+        # print(result.json())
 
     def getDescription(self):
         self.capture()
+        print("Captured")
         result = requests.post(
             "https://api.deepai.org/api/neuraltalk",
             files={
@@ -48,10 +53,12 @@ class ImageRecognizer(object):
             headers={'api-key': '7bb8a18d-b8ee-48d8-a576-eebd38a9da5f'}
         )
         res = result.json()['output']
-        print(result.json())
+        # print(result.json())
         speak(res)
 
 
 if __name__ == "__main__":
     recognizer = ImageRecognizer()
-    recognizer.getCaption()
+    # recognizer.getCaption()
+    while True:
+        pass

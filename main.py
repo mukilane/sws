@@ -33,12 +33,13 @@ The various streams/actions are:
 import threading
 
 import pushassist1
-from dialogflowAssistant import DialogflowAssistant
 from alert import Alerter
 from config_reader import config
+from dialogflowAssistant import DialogflowAssistant
 from gps import GPS
 from hardware import Hardware
 from maps import Maps
+from vision import ImageRecognizer
 
 
 class SANAS(object):
@@ -53,6 +54,7 @@ class SANAS(object):
         # self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
         # self.assistThread.start()
         # self.assistThread.daemon = False
+        self.recognizer = ImageRecognizer()
         self.SimpleAssistant = self.assistant.main(
             True, False)  # Returns a trigger function
         self.isAssistantRunning = False
@@ -64,6 +66,7 @@ class SANAS(object):
         try:
             pass
             self.hardware.setup(self.alert, self.listen, self.assist)
+            self.hardware.setupRecognizer(self.recognizer.getDescription)
         except:
             print("Error during hardware setup")
 
