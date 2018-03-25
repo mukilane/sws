@@ -27,6 +27,10 @@ Components to be interfaced are
 2. Arduino
     Arduino will be interfaced either through USB or I2C. Data will be read
     from it continuously in a separate thread.
+
+    I2C
+    SDA(A4) ->  BCM 2
+    SCL(A5) -> BCM 3
 """
 
 import RPi.GPIO as GPIO

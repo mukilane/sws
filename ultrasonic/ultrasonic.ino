@@ -24,29 +24,26 @@
 #include <NewPing.h>
 #define MAX 400
 
-#define VBML 3
-#define VBMR 6
+#define VBML 3  // Blue - Left
+#define VBMR 6  // BabyPink - Right
 
-NewPing right(11, 10, MAX);
-NewPing left(9, 8, MAX);
+NewPing right(11, 10, MAX); // Maroon-Orange
+NewPing left(9, 8, MAX); // Yellow-Green
 unsigned int l,r;
 
 int dir = 0;
 
 void setup() {
   pinMode(7, OUTPUT);
-//  pinMode(5, OUTPUT);
-//  pinMode(A0, OUTPUT);
-//  pinMode(A3, OUTPUT);
   digitalWrite(7, HIGH);
-//  digitalWrite(5, LOW);
-//  digitalWrite(A0, HIGH);
-//  digitalWrite(A3, LOW);
+  pinMode(A0, OUTPUT);
+  pinMode(A1, OUTPUT);
+  pinMode(A2, OUTPUT);
+  digitalWrite(A0, LOW);
+  digitalWrite(A1, LOW);
+  digitalWrite(A2, LOW);
   pinMode(VBML, OUTPUT);
-  pinode(VBMLP, OUTPUT);
   pinMode(VBMR, OUTPUT);
-  pinMode(VBMRP, OUTPUT);
-
   pinMode(13, OUTPUT); // LED
   digitalWrite(13, LOW);
   Serial.begin(9600);
@@ -62,17 +59,17 @@ void loop() {
   int d = l-r;
   if ( l < 30 || r < 30) {
     if (d > 10) {
-        int insty = map(l, 30, 5, 0, 255);
+        int insty = map(l, 30, 5, 50, 200);
         analogWrite(VBML, insty);
         Serial.println("LEFT");
         dir = 1;
     } else if ( d < -10) {
-        int insty = map(l, 30, 5, 0, 255);
+        int insty = map(l, 30, 5, 50, 200);
         analogWrite(VBMR, insty);
         Serial.println("RIGHT");
         dir = 2;
     } else {
-        int insty = map(l, 30, 5, 0, 255);
+        int insty = map(l, 30, 5, 50, 200);
         analogWrite(VBML, insty);
         analogWrite(VBMR, insty);
         Serial.println("CENTER");
@@ -83,6 +80,8 @@ void loop() {
       Serial.println("SAFE");
       dir = 0;
       digitalWrite(13, LOW);
+      analogWrite(VBML, 0);
+      analogWrite(VBMR, 0);
   }
 }
 

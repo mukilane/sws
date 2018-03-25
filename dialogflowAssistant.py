@@ -76,6 +76,7 @@ class DialogflowAssistant(object):
         }
         return result
 
+dialogflowAssistant = DialogflowAssistant()
 
 if __name__ == '__main__':
     assistant = DialogflowAssistant()
