@@ -43,10 +43,11 @@ from tts import speak
 GPIO_ALERT_PIN = 6
 GPIO_ASSISTANT_PIN = 26
 GPIO_NAVIGATE_PIN = 13
-GPIO_CLASSIFIER_PIN = 19
+GPIO_CLASSIFIER_PIN = 16
 
 GPIO_POWER_LED = 23
 GPIO_ASSISTANT_LED = 24
+GPIO_CLASSIFIER_LED = 25
 
 
 class Hardware(object):
@@ -85,6 +86,26 @@ class Hardware(object):
                               callback=navigate, bouncetime=300)
         self.available = True
         GPIO.output(GPIO_POWER_LED, GPIO.HIGH)
+
+    def setupRecognizer(self, callback):
+        """Sets up the GPIO pin, led and callback for the ImageRecognizer
+        
+        Arguments:
+            callback {function} -- Captures and gets captions
+        """
+        def call(cb):
+            """LED indication and callback"""
+            GPIO.output(GPIO_CLASSIFIER_LED, GPIO.HIGH)
+            callback()
+            GPIO.output(GPIO_CLASSIFIER_LED, GPIO.LOW)
+
+
+        GPIO.setup(GPIO_CLASSIFIER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(GPIO_CLASSIFIER_LED, GPIO.OUT)
+
+        GPIO.add_event_detect(GPIO_CLASSIFIER_PIN, GPIO.FALLING,
+                              calllback=call, bouncetime=300)
+        
 
     def cleanup(self):
         """Cleans up all the ports used"""
