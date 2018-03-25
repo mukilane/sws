@@ -23,7 +23,7 @@ class ImageRecognizer(object):
                 camera.resolution = (640, 480)
                 camera.start_preview()
                 time.sleep(2)
-                camera.capture(self.image_file)
+                camera.capture(self.image_file, use_video_port=True)
                 camera.stop_preview()
         except:
             print("Error in opening camera")

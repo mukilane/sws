@@ -18,36 +18,39 @@ and facilitates advertising and scanning of Beacons.
 """
 import json
 from time import sleep
+from tts import speak
+from bleson import get_provider, Observer
+#from beacontools import BeaconScanner, EddystoneFilter, EddystoneTLMFrame
 
-from beacontools import BeaconScanner, EddystoneFilter, EddystoneTLMFrame
 
-
-def callback(bt_addr, rssi, packet, additional_info):
-    """Callback for when message arrives
-
-    Arguments:
-        bt_addr {[type]} -- [description]
-        rssi {[type]} -- [description]
-        packet {[type]} -- [description]
-        additional_info {[type]} -- [description]
-    """
-    print("<%s, %d> %s %s" % (bt_addr, rssi, packet, additional_info))
+#def callback(bt_addr, rssi, packet, additional_info):
+#    """Callback for when message arrives
+#
+#    Arguments:
+#        bt_addr {[type]} -- [description]
+#        rssi {[type]} -- [description]
+#        packet {[type]} -- [description]
+#        additional_info {[type]} -- [description]
+#    """
+#    print("<%s, %d> %s %s" % (bt_addr, rssi, packet, additional_info))
 
 
 class BLE(object):
 
     def __init__(self):
-        self.scanner = BeaconScanner(
-            callback,
-            device_filter="123456789012345678901"
-            packet_filter=EddystoneTLMFrame
-        )
-        self.mockdata = json.load(open('mock.json'))
+        self.adapter = get_provider().get_adapter()
+        self.observer = Observer(self.adapter)
+        self.observer.on_advertising_data = self.onData
+
+    def onData(self, data):
+        result = data.name.strip()[1:]
+        print(result)
+        speak(result)
 
     def start(self):
-        self.service.start_advertising("11111111-2222-3333-4444-555555555555",
-                                       1, 1, 1, 200)
-        self.service.stop_advertising()
+        self.observer.start()
+        sleep(2)
+        self.observer.stop()
 
     def scan(self):
         """Scans for beacons"""
@@ -59,4 +62,4 @@ class BLE(object):
 
 if __name__ == "__main__":
     ble = BLE()
-    ble.scan()
+    ble.start()
