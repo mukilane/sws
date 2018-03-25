@@ -47,7 +47,7 @@ GPIO_CLASSIFIER_PIN = 16
 
 GPIO_POWER_LED = 23
 GPIO_ASSISTANT_LED = 24
-GPIO_CLASSIFIER_LED = 25
+GPIO_CLASSIFIER_LED = 22
 
 
 class Hardware(object):
@@ -183,12 +183,16 @@ class Hardware(object):
 
         def navigate(cb):
             print("Navigate")
+        
+        def classifier(cb):
+            print("Classifier")
 
         GPIO.setmode(GPIO.BCM)
         # Pin Setup
         GPIO.setup(GPIO_ALERT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(GPIO_ASSISTANT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(GPIO_NAVIGATE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(GPIO_CLASSIFIER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         # Callbacks
         # Boucetime is set to debounce the button presses
         GPIO.add_event_detect(GPIO_ALERT_PIN, GPIO.FALLING,
@@ -197,6 +201,8 @@ class Hardware(object):
                               callback=assist, bouncetime=300)
         GPIO.add_event_detect(GPIO_NAVIGATE_PIN, GPIO.FALLING,
                               callback=navigate, bouncetime=300)
+        GPIO.add_event_detect(GPIO_NAVIGATE_PIN, GPIO.FALLING,
+                              callback=classifier, bouncetime=300)  
         self.available=True
         while True:
             pass
