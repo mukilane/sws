@@ -17,7 +17,7 @@
 This modules implements methods to interface with the hardware (Raspberry Pi).
 
 Components to be interfaced are
-1. Buttons
+1. Buttons 
     a. Alert button - BCM_6 / Phy_31
     b. Navigate button - BCM_13 / Phy_33
     c. Assistant button - BCM_26 / Phy_37
@@ -32,8 +32,6 @@ Components to be interfaced are
 import RPi.GPIO as GPIO
 import time
 import serial
-from smbus2 import SMBus
-from tts import speak
 # import threading
 
 GPIO_ALERT_PIN = 6
@@ -56,7 +54,7 @@ class Hardware(object):
         """Sets up all the GPIO pins and callbacks
 
         Arguments:
-            alert {func} -- Callback to alert
+            alert {func} -- Callback to alert 
             navigate {func} -- Callback to start navigation
             assist {func} -- Callback to start the assistant
         """
@@ -94,60 +92,22 @@ class Hardware(object):
         else:
             GPIO.output(GPIO_ASSISTANT_LED, GPIO.LOW)
 
-    def rangerI2C(self):
-        """Reads the ultrasonic sensor data using I2C
-
-        Connections:
-        RPI GPIO2 --> Arduino A4 (SDA)
-        RPI GPIO4 --> Arduino A5 (SCL)
-        RPI GPIO5 --> Arduino GND
-
-        Slave Address : 0x04
-        """
-        bus = SMBus(1)
-        lastval = 0
-        while True:
-            val = int(bus.read_byte(0x04))
-            if lastval != val:
-                if val == 0:
-                    print("SAFE")
-                    speak("You are safe")
-                elif val == 1:
-                    print("LEFT")
-                    speak("Obstacle on the left")
-                elif val == 2:
-                    print("RIGHT")
-                    speak("Obstacle on the right")
-                elif val == 3:
-                    print("CENTER")
-                    speak("Obstacle in front of you")
-                lastval=val
-            time.sleep(1)
-
     def ranger(self):
         """Reads ultrasonic sensor data
 
-        Connects to Arduino through I2C and receives data from the
+        Connects to Arduino through I2C and receives data from the 
         ultrasonic sensor.
         This function will run in a separate thread.
         """
         try:
-            port=serial.Serial('/dev/ttyUSB0', 9600)
+            port = serial.Serial('dev/ttyUSB0', 9600)
         except:
             print("Connection error")
             exit()
-        lastval="SAFE"
         while True:
-            val=str(port.readline().strip().decode("utf-8"))
-            if lastval != val:
-                if val == "LEFT":
-                    speak("Obstacle on the left")
-                elif val == "RIGHT":
-                    speak("Obstacle on the right")
-                elif val == "CENTER":
-                    speak("Obstacle in front")
-                lastval=val
-            # Notify based on
+            val = port.readline()
+            
+# Notify based on
 
     def test(self):
         def alert(cb):
@@ -172,11 +132,11 @@ class Hardware(object):
                               callback=assist, bouncetime=300)
         GPIO.add_event_detect(GPIO_NAVIGATE_PIN, GPIO.FALLING,
                               callback=navigate, bouncetime=300)
-        self.available=True
+        self.available = True
         while True:
             pass
 
 
 if __name__ == "__main__":
-    h=Hardware()
-    h.rangerI2C()
+    h = Hardware()
+    h.test()

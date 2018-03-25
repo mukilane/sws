@@ -119,6 +119,8 @@ class SimpleAssistant(object):
                 conversation_state = resp.dialog_state_out.conversation_state
                 logging.debug('Updating conversation state.')
                 self.conversation_state = conversation_state
+            if resp.dialog_state_out.supplemental_display_text:
+                logging.info(resp.dialog_state_out.supplemental_display_text)
             if resp.dialog_state_out.volume_percentage != 0:
                 volume_percentage = resp.dialog_state_out.volume_percentage
                 logging.info('Setting volume to %s%%', volume_percentage)
