@@ -4,6 +4,7 @@ import time
 import requests
 
 import picamera
+from tts import speak
 
 
 class ImageRecognizer(object):
@@ -29,9 +30,21 @@ class ImageRecognizer(object):
             },
             headers={'api-key': '7bb8a18d-b8ee-48d8-a576-eebd38a9da5f'}
         )
+        caption = result.json()['captions'][0]['caption']
+        speak(caption)
         print(result.json())
-    
-    def 
+
+    def getDescription(self):
+        result = requests.post(
+            "https://api.deepai.org/api/neuraltalk",
+            files={
+                'image': open(self.image_file, 'rb'),
+            },
+            headers={'api-key': '7bb8a18d-b8ee-48d8-a576-eebd38a9da5f'}
+        )
+        res = result.json()['output']
+        print(result.json())
+        speak(res)
 
 
 if __name__ == "__main__":
