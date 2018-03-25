@@ -1,38 +1,40 @@
 import io
-import os
 import time
-import google.cloud.vision
-import picamera
+
 import requests
 
-def TakePic():
-    with picamera.PiCamera() as camera:
-        camera.resolution = (640, 480)
-        camera.start_preview()
-        time.sleep(2)
-        camera.capture('./test.jpg')
-        camera.stop_preview()
+import picamera
 
-#vision_client = google.cloud.vision.ImageAnnotatorClient()
 
-#with io.open('./test.jpg', 'rb') as image_file:
-    #content = image_file.read()
+class ImageRecognizer(object):
+    def __init__(self):
+        self.image_file = './test.jpg'
 
-#image = google.cloud.vision.types.Image(content=content)
-#response = vision_client.label_detection(image=image)
+    def capture(self):
+        try:
+            with picamera.PiCamera() as camera:
+                camera.resolution = (640, 480)
+                camera.start_preview()
+                time.sleep(2)
+                camera.capture(self.image_file)
+                camera.stop_preview()
+        except:
+            print("Error in opening camera")
 
-#for label in response.label_annotations:
-#    print(label.description)
+    def getCaption(self):
+        result = requests.post(
+            "https://api.deepai.org/api/densecap",
+            files={
+                'image': open(self.image_file, 'rb'),
+            },
+            headers={'api-key': '7bb8a18d-b8ee-48d8-a576-eebd38a9da5f'}
+        )
+        print(result.json())
+    
+    def 
 
-def DeepAi():
-    r = requests.post(
-      "https://api.deepai.org/api/densecap",
-      files={
-        'image': open('./test.jpg', 'rb'),
-      },
-      headers={'api-key' : '7bb8a18d-b8ee-48d8-a576-eebd38a9da5f'}
-    )
-    print(r.json())
 
-TakePic()
-DeepAi()
+if __name__ == "__main__":
+    recognizer = ImageRecognizer()
+    recognizer.capture()
+    recognizer.getCaption()
