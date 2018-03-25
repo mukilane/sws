@@ -40,7 +40,7 @@ from gps import GPS
 from hardware import Hardware
 from maps import Maps
 from vision import ImageRecognizer
-
+from ble import BLE
 
 class SANAS(object):
 
@@ -51,6 +51,7 @@ class SANAS(object):
         self.hardware = Hardware()
         self.alerter = Alerter()
         self.dialogflowAssistant = DialogflowAssistant()
+        self.beacon = BLE()
         # self.assistThread = threading.Thread(target=self.assistant.main, args=(False, False))
         # self.assistThread.start()
         # self.assistThread.daemon = False
@@ -121,6 +122,8 @@ class SANAS(object):
             self.navigate(None)
         elif intent == "ASSIST":
             self.assist(None)
+        elif intent == "RECOGNIZE":
+            self.recognizer.getDescription()
         elif intent == "NEARBY":
             print(response['parameters']['place-type'])
             if "place-type" in response['parameters']:
@@ -130,6 +133,7 @@ class SANAS(object):
         elif intent == "BEARING":
             self.maps.getBearing()
         elif intent == "BLE_BUS":
+            self.beacon.start()
             self.maps.getBusRoute("home")
 
 
