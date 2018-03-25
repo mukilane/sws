@@ -4,3 +4,6 @@ __pycache__
 config.ini
 *.wav
 speech.wav
+tensorflow/
+.test.jpg
+
