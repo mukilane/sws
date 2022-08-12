@@ -36,7 +36,7 @@ class ImageRecognizer(object):
             files={
                 'image': open(self.image_file, 'rb'),
             },
-            headers={'api-key': '7bb8a18d-b8ee-48d8-a576-eebd38a9da5f'}
+            headers={'api-key': '<enter-your-api-key>'}
         )
         caption = result.json()['output']['captions'][0]['caption']
         speak(caption)
@@ -50,7 +50,7 @@ class ImageRecognizer(object):
             files={
                 'image': open(self.image_file, 'rb'),
             },
-            headers={'api-key': '7bb8a18d-b8ee-48d8-a576-eebd38a9da5f'}
+            headers={'api-key': '<enter-your-api-key>'}
         )
         res = result.json()['output']
         # print(result.json())
