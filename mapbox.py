@@ -1,6 +1,6 @@
 from mapbox import Directions
 
-service = Directions(access_token="pk.eyJ1IjoibXVraWxhbmUiLCJhIjoiY2pibTFlcG4wNHFtaDJxcWdubW4wY2lybSJ9.-IOHNJU3H9XrPrqLwG0qhQ")
+service = Directions(access_token="<access-key insert here>")
 
 origin = {
 	'type': 'Feature',
